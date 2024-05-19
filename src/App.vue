@@ -1,16 +1,17 @@
 <template>
     <div id="app">
-        <ReceiptProcessor />
+        <ReceiptProcessorGemini />
     </div>
 </template>
 
 <script>
-import ReceiptProcessor from './components/ReceiptProcessor.vue';
+// import ReceiptProcessor from './components/ReceiptProcessor.vue';
+import ReceiptProcessorGemini from './components/ReceiptProcessorGemini.vue';
 
 export default {
     name: 'App',
     components: {
-        ReceiptProcessor
+        ReceiptProcessorGemini
     }
 };
 </script>
