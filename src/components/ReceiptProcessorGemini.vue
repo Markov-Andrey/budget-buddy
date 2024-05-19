@@ -13,18 +13,31 @@
             <InputComponent label="Организация" inputId="organization" :value="jsonData.organization" :error="jsonData.organization === 'error' ? jsonData.organization : ''"/>
             <InputComponent label="Адрес" inputId="address" :value="jsonData.address" :error="jsonData.address === 'error' ? jsonData.address : ''"/>
             <table>
-                <tr v-for="(item, itemIndex) in jsonData.items" :key="itemIndex">
-                    <td>
-                        <InputComponent :inputId="'itemName' + itemIndex" :value="item.name" :error="item.name === 'error' ? item.name : ''"/>
-                    </td>
-                    <td>
-                        <InputComponent :inputId="'itemQuantity' + itemIndex" :value="item.quantity" :error="item.quantity === 'error' ? item.quantity : ''"/>
-                    </td>
-                    <td>
-                        <InputComponent :inputId="'itemPrice' + itemIndex" type="number" :value="item.price" :error="item.price === 'error' ? item.price : ''"/>
-                    </td>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
                 </tr>
+                <template v-if="jsonData.items && jsonData.items.length">
+                    <tr v-for="(item, itemIndex) in jsonData.items" :key="itemIndex">
+                        <td>
+                            <InputComponent :inputId="'itemName' + itemIndex" :value="item.name" :error="item.name === 'error' ? item.name : ''"/>
+                        </td>
+                        <td>
+                            <InputComponent :inputId="'itemQuantity' + itemIndex" :value="item.quantity" :error="item.quantity === 'error' ? item.quantity : ''"/>
+                        </td>
+                        <td>
+                            <InputComponent :inputId="'itemPrice' + itemIndex" type="number" :value="item.price" :error="item.price === 'error' ? item.price : ''"/>
+                        </td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr>
+                        <td colspan="3">Нет данных</td>
+                    </tr>
+                </template>
             </table>
+            <button @click="addItem" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg">+ Add</button>
             <InputComponent label="Скидка" inputId="discount" :type="'checkbox'" :value="jsonData.discount" :error="jsonData.discount === 'error' ? jsonData.discount : ''"/>
             <InputComponent label="Общая стоимость" inputId="totalPrice" :type="'number'" :value="jsonData.totalPrice" :error="jsonData.totalPrice === 'error' ? jsonData.totalPrice : ''"/>
         </div>
@@ -81,7 +94,7 @@ export default {
                 try {
                     const result = await model.generateContent([promptText, image]);
                     const textResponse = await result.response.text();
-                    console.log(textResponse);
+                    console.log({ 'Чистый ответ сервера': textResponse });
 
                     // Очистка ответа перед парсингом JSON
                     const cleanedResponse = textResponse.replace(/```json|```/g, '').trim();
@@ -107,6 +120,12 @@ export default {
             loading,
         };
     },
+    methods: {
+        addItem() {
+            const newItem = { name: '', quantity: '', price: '' };
+            this.jsonData.items.push(newItem);
+        }
+    }
 };
 </script>
 
