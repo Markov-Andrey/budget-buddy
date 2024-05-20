@@ -1,18 +1,14 @@
 <template>
     <div id="app">
-        <ReceiptProcessorGemini />
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-// import ReceiptProcessor from './components/ReceiptProcessor.vue';
-import ReceiptProcessorGemini from './components/ReceiptProcessorGemini.vue';
 
 export default {
     name: 'App',
-    components: {
-        ReceiptProcessorGemini
-    }
+    components: {    }
 };
 </script>
 
