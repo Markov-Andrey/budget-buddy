@@ -1,13 +1,21 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
-import HelloWorld from '../components/HelloWorld.vue'; // Импортируйте ваш новый компонент
+import HelloWorld from '../pages/HelloWorld.vue';
+import Layout from "@/components/Layout.vue";
 
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: HelloWorld,
-    },
+        component: Layout,
+        children: [
+            {
+                path: '',
+                name: 'Home',
+                component: HelloWorld
+            }
+            // Добавьте другие маршруты здесь
+        ]
+    }
 ];
 
 const router = createRouter({
