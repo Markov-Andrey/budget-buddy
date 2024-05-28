@@ -41,15 +41,9 @@ export default {
                 }
             } catch (error) {
                 if (error.response) {
-                    // Сервер ответил с ошибкой
                     console.log('Error response:', error.response);
                     this.error = error.response.data.message || 'Invalid credentials';
-                } else if (error.request) {
-                    // Запрос был сделан, но ответа не получено
-                    console.log('Error request:', error.request);
-                    this.error = 'No response from server';
                 } else {
-                    // Произошла ошибка при настройке запроса
                     console.log('Error message:', error.message);
                     this.error = 'Request setup error';
                 }
