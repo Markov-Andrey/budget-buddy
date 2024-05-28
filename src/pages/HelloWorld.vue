@@ -4,7 +4,7 @@
 </template>
 
 <script>
-// import axios from "../axios.js";
+// import axios from "../axios-instance.js";
 
 export default {
     name: 'HelloWorld',

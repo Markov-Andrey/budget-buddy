@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import axios from './axios';
+import axiosInstance from '/src/axios-instance';
 import Layout from "@/components/Layout.vue";
 import LoginForm from "@/components/LoginForm.vue";
 
@@ -23,8 +23,7 @@ export default {
     },
     async created() {
         try {
-            const response = await axios.get('/user');
-
+            const response = await axiosInstance.get('/auth/user');
             if (response.status === 200) {
                 this.isAuthenticated = true;
             }

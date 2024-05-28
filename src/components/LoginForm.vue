@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import axios from '/src/axios';
+import axiosInstance from '@/axios-instance';
 
 export default {
     data() {
@@ -29,19 +29,30 @@ export default {
     methods: {
         async login() {
             try {
-                const response = await axios.post('/auth/login', {
+                const response = await axiosInstance.post('/auth/login', {
                     email: this.email,
                     password: this.password,
-                    remember: true,
+                    remember: true
                 });
-                console.log(response);
 
                 if (response.status === 200) {
+                    localStorage.setItem('token', response.data.token);
                     this.$emit('authenticated');
                 }
             } catch (error) {
-                console.log(error);
-                this.error = 'Invalid credentials';
+                if (error.response) {
+                    // Сервер ответил с ошибкой
+                    console.log('Error response:', error.response);
+                    this.error = error.response.data.message || 'Invalid credentials';
+                } else if (error.request) {
+                    // Запрос был сделан, но ответа не получено
+                    console.log('Error request:', error.request);
+                    this.error = 'No response from server';
+                } else {
+                    // Произошла ошибка при настройке запроса
+                    console.log('Error message:', error.message);
+                    this.error = 'Request setup error';
+                }
             }
         }
     }
