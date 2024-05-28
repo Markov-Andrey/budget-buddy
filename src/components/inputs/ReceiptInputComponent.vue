@@ -17,8 +17,9 @@
         <IconCamera />
       </button>
     </div>
-    <div v-if="imageUrl" class="mt-4">
-      <img :src="imageUrl" alt="Image preview" class="max-w-xs rounded shadow-lg"/>
+    <div v-if="imageUrl" class="relative mt-4 inline-block">
+        <img :src="imageUrl" alt="Image preview" class="max-w-xs rounded shadow-lg"/>
+        <button @click="removeImage" class="absolute top-0 right-0 mt-2 mr-2 p-2 text-red-700">X</button>
     </div>
   </div>
 </template>
@@ -43,7 +44,11 @@ export default {
     },
     openCamera() {
       this.$refs.fileInput.click();
-    }
+    },
+    removeImage() {
+        this.imageUrl = null;
+        this.$refs.fileInput.value = null;
+    },
   }
 }
 </script>
