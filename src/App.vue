@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import axiosInstance from '/src/axios-instance';
+import axiosInstance from '@/axios-instance';
 import Layout from "@/components/Layout.vue";
 import LoginForm from "@/components/LoginForm.vue";
 
