@@ -2,6 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HelloWorld from '../pages/HelloWorld.vue';
 import Layout from "@/components/Layout.vue";
+import ReceiptsPage from "@/pages/ReceiptsPage";
 
 const routes = [
     {
@@ -12,6 +13,11 @@ const routes = [
                 path: '',
                 name: 'Home',
                 component: HelloWorld
+            },
+            {
+                path: '/add',
+                name: 'Добавить чек',
+                component: ReceiptsPage
             },
         ]
     }
