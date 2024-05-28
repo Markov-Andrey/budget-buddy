@@ -1,7 +1,7 @@
 <template>
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg flex justify-center">
-    <table>
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  <div class="relative w-full overflow-x-auto shadow-md sm:rounded-lg flex justify-center">
+    <table class="w-full">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
         <th v-for="(header, index) in headers" :key="index" scope="col" class="px-6 py-3">
           {{ header }}
@@ -15,14 +15,17 @@
           :key="index"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
       >
-        <td class="px-6 py-4">{{ item.name }}</td>
-        <td class="px-6 py-4">{{ item.color }}</td>
-        <td class="px-6 py-4">{{ item.category }}</td>
-        <td class="px-6 py-4">{{ item.price }}</td>
+          <td class="px-6 py-4">
+              <img :src="`${apiUrl}/${item.image_path}`" alt="Receipt Image" class="w-16 h-16">
+          </td>
+        <td class="px-6 py-4">{{ item.processed }}</td>
+        <td class="px-6 py-4">{{ item.error }}</td>
+        <td class="px-6 py-4">{{ item.annulled }}</td>
+        <td class="px-6 py-4">{{ item.amount }}</td>
         <td class="px-6 py-4 text-right flex gap-2">
-          <router-link v-if="isShow" to="`/edit/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</router-link>
-          <router-link v-if="isEdit" to="`/edit/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</router-link>
-          <router-link v-if="isDelete" to="`/edit/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</router-link>
+            <router-link v-if="isShow" :to="`/show/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</router-link>
+            <router-link v-if="isEdit" :to="`/edit/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</router-link>
+            <router-link v-if="isDelete" :to="`/delete/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</router-link>
         </td>
       </tr>
       </tbody>
@@ -33,18 +36,19 @@
 <script>
 export default {
   name: "TableComponent",
+  data() {
+      return {
+          apiUrl: process.env.VUE_APP_API_URL + 'storage/',
+      };
+  },
   props: {
     headers: {
       type: Array,
-      default: () => ["Product name", "Color", "Category", "Price"]
+      default: () => []
     },
     data: {
       type: Array,
-      default: () => [
-        { id: 1, name: 'Apple MacBook Pro 17"', color: 'Silver', category: 'Laptop', price: '$2999' },
-        { id: 2, name: 'Microsoft Surface Pro', color: 'White', category: 'Laptop PC', price: '$1999' },
-        { id: 3, name: 'Magic Mouse 2', color: 'Black', category: 'Accessories', price: '$99' },
-      ]
+      default: () => []
     },
     isShow: {
       type: Boolean,
@@ -58,7 +62,7 @@ export default {
       type: Boolean,
       default: false
     },
-  }
+  },
 }
 </script>
 
