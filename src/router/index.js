@@ -12,8 +12,7 @@ const routes = [
                 path: '',
                 name: 'Home',
                 component: HelloWorld
-            }
-            // Добавьте другие маршруты здесь
+            },
         ]
     }
 ];
