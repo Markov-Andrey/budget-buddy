@@ -16,9 +16,7 @@
           <a href="/" class="flex ms-2 md:me-24">
             <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo"/>
             <div class="flex flex-col">
-                            <span>
-                                <span class="text-2xl font-bold font-serif italic">Budget Buddy</span>
-                            </span>
+                <span class="text-2xl font-bold font-serif italic">Budget Buddy</span>
             </div>
           </a>
         </div>
@@ -181,6 +179,36 @@ export default {
   name: "Layout",
   components: {ProfileDropdown, IconDashboard}
 }
+</script>
+<script setup>
+import { onMounted } from 'vue'
+import {
+    initAccordions,
+    initCarousels,
+    initCollapses,
+    initDials,
+    initDismisses,
+    initDrawers,
+    initDropdowns,
+    initModals,
+    initPopovers,
+    initTabs,
+    initTooltips } from 'flowbite'
+
+// Инициализация всех flowbite компонентов
+onMounted(() => {
+    initAccordions();
+    initCarousels();
+    initCollapses();
+    initDials();
+    initDismisses();
+    initDrawers();
+    initDropdowns();
+    initModals();
+    initPopovers();
+    initTabs();
+    initTooltips();
+})
 </script>
 
 <style scoped>
