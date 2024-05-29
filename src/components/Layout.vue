@@ -16,13 +16,12 @@
           <a href="/" class="flex ms-2 md:me-24">
             <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo"/>
             <div class="flex flex-col">
-                            <span>
-                                <span class="text-2xl font-bold font-serif italic">Budget Buddy</span>
-                            </span>
+                <span class="text-2xl font-bold font-serif italic">Budget Buddy</span>
             </div>
           </a>
         </div>
         <div class="flex items-center">
+          <ElementBalance />
           <div class="flex items-center ms-3">
             <ProfileDropdown />
             <div
@@ -74,14 +73,16 @@
           <RouterLink to="/"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:shadow-md hover:bg-gray-100 group">
             <IconDashboard
-                :classes="'w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'"/>
+                :classes="'w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900'"/>
             <span class="ms-3">Dashboard</span>
           </RouterLink>
         </li>
         <li>
           <RouterLink to="/add"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:shadow-md hover:bg-gray-100 group">
-            <span class="ms-3">Добавить чек</span>
+              <IconReceipt
+                      :classes="'w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900'"/>
+            <span class="ms-3">Обработка чеков</span>
           </RouterLink>
         </li>
         <li>
@@ -181,6 +182,39 @@ export default {
   name: "Layout",
   components: {ProfileDropdown, IconDashboard}
 }
+</script>
+<script setup>
+// Макет для использования индивидуально в компонентах
+import { onMounted } from 'vue'
+import {
+    initAccordions,
+    initCarousels,
+    initCollapses,
+    initDials,
+    initDismisses,
+    initDrawers,
+    initDropdowns,
+    initModals,
+    initPopovers,
+    initTabs,
+    initTooltips } from 'flowbite'
+import IconReceipt from "@/components/svg-icons/IconReceipt.vue";
+import ElementBalance from "@/components/element/ElementBalance.vue";
+
+// Инициализация всех flowbite компонентов
+onMounted(() => {
+    initAccordions();
+    initCarousels();
+    initCollapses();
+    initDials();
+    initDismisses();
+    initDrawers();
+    initDropdowns();
+    initModals();
+    initPopovers();
+    initTabs();
+    initTooltips();
+})
 </script>
 
 <style scoped>

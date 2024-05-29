@@ -1,69 +1,173 @@
 <template>
-  <div class="relative w-full overflow-x-auto shadow-md sm:rounded-lg flex justify-center">
+
     <table class="w-full">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-      <tr>
-        <th v-for="(header, index) in headers" :key="index" scope="col" class="px-6 py-3">
-          {{ header }}
-        </th>
-        <th scope="col" class="px-6 py-3"><span class="sr-only">Edit</span></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
-          v-for="(item, index) in data"
-          :key="index"
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-      >
-          <td class="px-6 py-4">
-              <img :src="`${apiUrl}/${item.image_path}`" alt="Receipt Image" class="w-16 h-16">
-          </td>
-        <td class="px-6 py-4">{{ item.processed }}</td>
-        <td class="px-6 py-4">{{ item.error }}</td>
-        <td class="px-6 py-4">{{ item.annulled }}</td>
-        <td class="px-6 py-4">{{ item.amount }}</td>
-        <td class="px-6 py-4 text-right flex gap-2">
-            <router-link v-if="isShow" :to="`/show/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</router-link>
-            <router-link v-if="isEdit" :to="`/edit/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</router-link>
-            <router-link v-if="isDelete" :to="`/delete/${item.id}`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</router-link>
-        </td>
-      </tr>
-      </tbody>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+            <th v-for="(header, index) in headers" :key="index" scope="col" class="px-6 py-3">
+                {{ header }}
+            </th>
+        </tr>
+        </thead>
     </table>
-  </div>
+    <div v-for="(item, index) in data" :key="index" class="bg-white border-b hover:bg-gray-50">
+        <div :id="`accordion-open-${item.id}`" data-accordion="open">
+            <!-- Accordion header -->
+            <div :id="`accordion-open-heading-${item.id}`">
+                <button type="button"
+                        class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 hover:bg-gray-100 gap-3"
+                        :data-accordion-target="`#accordion-open-body-${item.id}`"
+                        :aria-controls="`accordion-open-body-${item.id}`">
+                    <div class="flex justify-between items-stretch w-full">
+                        <div class="px-6 py-4">
+                            <!-- Modal toggle -->
+                            <button :data-modal-target="`photo-modal-${item.id}`" :data-modal-toggle="`photo-modal-${item.id}`" type="button">
+                                <img v-if="item.image_path" :src="`${url}/${item.image_path}`" alt="Image thumbnail"
+                                     class="thumbnail w-16 h-16 object-cover rounded"/>
+                            </button>
+
+                            <!-- Main modal -->
+                            <div :id="`photo-modal-${item.id}`" tabindex="-1" aria-hidden="true"
+                                 class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow">
+                                        <!-- Modal header -->
+                                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                                            <button type="button"
+                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                                    :data-modal-hide="`photo-modal-${item.id}`">
+                                                <IconClose classes="w-3 h-3"/>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="p-4 md:p-5 space-y-4">
+                                            <img v-if="item.image_path" :src="`${url}/${item.image_path}`"
+                                                 alt="Image thumbnail"
+                                                 class="thumbnail w-full h-full object-cover rounded"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4">
+                            <ElementBoolean :bool="item.processed"/>
+                        </div>
+                        <div class="px-6 py-4">
+                            <ElementBoolean :bool="item.error"/>
+                        </div>
+                        <div class="px-6 py-4">
+                            <ElementBoolean :bool="item.annulled"/>
+                        </div>
+                        <div class="px-6 py-4">
+                            {{ item.amount }}
+                        </div>
+                        <div class="px-6 py-4">
+                            {{ formatDate(item.datetime) }}
+                        </div>
+                        <div class="px-6 py-4">
+                            <router-link v-if="isShow" :to="`/show/${item.id}`"
+                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show
+                            </router-link>
+                            <router-link v-if="isEdit" :to="`/edit/${item.id}`"
+                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
+                            </router-link>
+                            <button v-if="isDelete" @click="deleteItem(item.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <IconAccordion v-if="item.data.length" :classes="`w-3 h-3 rotate-180 shrink-0`"/>
+                </button>
+            </div>
+            <!-- Accordion body -->
+            <div v-if="item.data" :id="`accordion-open-body-${item.id}`" class="hidden"
+                 :aria-labelledby="`accordion-open-heading-${item.id}`">
+                <table v-if="item.data.length" class="p-5 border border-t-0 border-gray-200 dark:border-gray-700 w-full">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 w-full">
+                    <tr>
+                        <th class="px-3 py-2" scope="col">№</th>
+                        <th class="px-3 py-2" scope="col">Название</th>
+                        <th class="px-3 py-2" scope="col">Кол-во</th>
+                        <th class="px-3 py-2" scope="col">Вес/объем</th>
+                        <th class="px-3 py-2" scope="col">Цена за 1 ед / полный вес</th>
+                        <th class="px-3 py-2" scope="col">Субкатегория</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-white w-full" v-for="(item, index) in item.data" :key="index">
+                        <td class="px-3 py-2">{{ index + 1 }}</td>
+                        <td class="px-3 py-2">{{ item.name }}</td>
+                        <td class="px-3 py-2">{{ item.quantity }}</td>
+                        <td class="px-3 py-2">{{ item.weight }}</td>
+                        <td class="px-3 py-2">{{ item.price }}</td>
+                        <td class="px-3 py-2">{{ item.subcategory ? item.subcategory.name : '-' }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
+import axiosInstance from "@/axios-instance";
+
 export default {
-  name: "TableComponent",
-  data() {
-      return {
-          apiUrl: process.env.VUE_APP_API_URL + 'storage/',
-      };
-  },
-  props: {
-    headers: {
-      type: Array,
-      default: () => []
+    name: "TableComponent",
+    data() {
+        return {
+            url: process.env.VUE_APP_API_URL + 'storage/',
+        };
     },
-    data: {
-      type: Array,
-      default: () => []
+    props: {
+        headers: {
+            type: Array,
+            default: () => []
+        },
+        data: {
+            type: Array,
+            default: () => []
+        },
+        isShow: {
+            type: Boolean,
+            default: false
+        },
+        isEdit: {
+            type: Boolean,
+            default: false
+        },
+        isDelete: {
+            type: Boolean,
+            default: false
+        },
     },
-    isShow: {
-      type: Boolean,
-      default: false
-    },
-    isEdit: {
-      type: Boolean,
-      default: false
-    },
-    isDelete: {
-      type: Boolean,
-      default: false
-    },
-  },
+    methods: {
+        async deleteItem(itemId) {
+            try {
+                const response = await axiosInstance.delete(`/receipts/delete/${itemId}`);
+                console.log('Item deleted successfully:', response.data);
+            } catch (error) {
+                console.error('Error deleting item:', error);
+            }
+        }
+    }
 }
+</script>
+<script setup>
+import {onMounted} from 'vue'
+import {
+    initAccordions,
+    initModals
+} from 'flowbite'
+import IconClose from "@/components/svg-icons/IconClose.vue";
+import ElementBoolean from "@/components/element/ElementBoolean.vue";
+import {formatDate} from "@/services/dateFormatter";
+import IconAccordion from "@/components/svg-icons/IconAccordion.vue";
+
+onMounted(() => {
+    initAccordions();
+    initModals();
+})
 </script>
 
 <style scoped>
