@@ -71,9 +71,9 @@
                             <router-link v-if="isEdit" :to="`/edit/${item.id}`"
                                          class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
                             </router-link>
-                            <router-link v-if="isDelete" :to="`/delete/${item.id}`"
-                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete
-                            </router-link>
+                            <button v-if="isDelete" @click="deleteItem(item.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                Delete
+                            </button>
                         </div>
                     </div>
                     <IconAccordion v-if="item.data.length" :classes="`w-3 h-3 rotate-180 shrink-0`"/>
@@ -110,6 +110,8 @@
 </template>
 
 <script>
+import axiosInstance from "@/axios-instance";
+
 export default {
     name: "TableComponent",
     data() {
@@ -138,6 +140,16 @@ export default {
             type: Boolean,
             default: false
         },
+    },
+    methods: {
+        async deleteItem(itemId) {
+            try {
+                const response = await axiosInstance.delete(`/receipts/delete/${itemId}`);
+                console.log('Item deleted successfully:', response.data);
+            } catch (error) {
+                console.error('Error deleting item:', error);
+            }
+        }
     }
 }
 </script>
