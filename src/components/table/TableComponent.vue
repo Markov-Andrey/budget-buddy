@@ -76,13 +76,13 @@
                             </router-link>
                         </div>
                     </div>
-                    <IconAccordion :classes="`w-3 h-3 rotate-180 shrink-0`"/>
+                    <IconAccordion v-if="item.data.length" :classes="`w-3 h-3 rotate-180 shrink-0`"/>
                 </button>
             </div>
             <!-- Accordion body -->
             <div v-if="item.data" :id="`accordion-open-body-${item.id}`" class="hidden"
                  :aria-labelledby="`accordion-open-heading-${item.id}`">
-                <table class="p-5 border border-t-0 border-gray-200 dark:border-gray-700 w-full">
+                <table v-if="item.data.length" class="p-5 border border-t-0 border-gray-200 dark:border-gray-700 w-full">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 w-full">
                     <tr>
                         <th class="px-3 py-2" scope="col">№</th>

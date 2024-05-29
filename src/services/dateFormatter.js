@@ -1,6 +1,11 @@
-// src/services/dateFormatter.js
 export function formatDate(datetime, locale = navigator.language) {
-    return new Date(datetime).toLocaleDateString(locale, {
+    const date = new Date(datetime);
+
+    if (!datetime || isNaN(date.getTime())) {
+        return null;
+    }
+
+    return date.toLocaleDateString(locale, {
         year: '2-digit',
         month: 'numeric',
         day: 'numeric',

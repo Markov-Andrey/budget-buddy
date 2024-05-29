@@ -1,6 +1,5 @@
 <template>
     <div class="p-4 sm:ml-64">
-        <div>Добавить новый чек</div>
         <ReceiptInputComponent/>
         <TableComponent v-if="receipts && receipts.data && receipts.data.length" :headers="['Чек', 'Обработка', 'Ошибка', 'Ануллирован', 'Сумма', 'Дата', '']" :data="receipts.data" is-edit />
     </div>
