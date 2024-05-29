@@ -21,6 +21,7 @@
           </a>
         </div>
         <div class="flex items-center">
+          <ElementBalance />
           <div class="flex items-center ms-3">
             <ProfileDropdown />
             <div
@@ -198,6 +199,7 @@ import {
     initTabs,
     initTooltips } from 'flowbite'
 import IconReceipt from "@/components/svg-icons/IconReceipt.vue";
+import ElementBalance from "@/components/element/ElementBalance.vue";
 
 // Инициализация всех flowbite компонентов
 onMounted(() => {
