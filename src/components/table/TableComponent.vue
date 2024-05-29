@@ -16,7 +16,29 @@
                     class="bg-white border-b hover:bg-gray-50"
             >
                 <td class="px-6 py-4">
-                    <img v-if="item.image_path" :src="`${url}/${item.image_path}`" alt="Image thumbnail" class="thumbnail w-16 h-16 object-cover rounded" />
+                    <!-- Modal toggle -->
+                    <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="" type="button">
+                        <img v-if="item.image_path" :src="`${url}/${item.image_path}`" alt="Image thumbnail" class="thumbnail w-16 h-16 object-cover rounded" />
+                    </button>
+
+                    <!-- Main modal -->
+                    <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                        <div class="relative p-4 w-full max-w-2xl max-h-full">
+                            <!-- Modal content -->
+                            <div class="relative bg-white rounded-lg shadow">
+                                <!-- Modal header -->
+                                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="default-modal">
+                                        <IconClose classes="w-3 h-3"/>
+                                    </button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="p-4 md:p-5 space-y-4">
+                                    <img v-if="item.image_path" :src="`${url}/${item.image_path}`" alt="Image thumbnail" class="thumbnail w-full h-full object-cover rounded" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
                 <td class="px-6 py-4">{{ item.processed }}</td>
                 <td class="px-6 py-4">{{ item.error }}</td>
@@ -50,15 +72,11 @@ export default {
     props: {
         headers: {
             type: Array,
-            default: () => ["Product name", "Color", "Category", "Price"]
+            default: () => []
         },
         data: {
             type: Array,
-            default: () => [
-                {id: 1, name: 'Apple MacBook Pro 17"', color: 'Silver', category: 'Laptop', price: '$2999'},
-                {id: 2, name: 'Microsoft Surface Pro', color: 'White', category: 'Laptop PC', price: '$1999'},
-                {id: 3, name: 'Magic Mouse 2', color: 'Black', category: 'Accessories', price: '$99'},
-            ]
+            default: () => []
         },
         isShow: {
             type: Boolean,
@@ -74,6 +92,17 @@ export default {
         },
     }
 }
+</script>
+<script setup>
+import { onMounted } from 'vue'
+import {
+    initModals
+} from 'flowbite'
+import IconClose from "@/components/svg-icons/IconClose.vue";
+
+onMounted(() => {
+    initModals();
+})
 </script>
 
 <style scoped>

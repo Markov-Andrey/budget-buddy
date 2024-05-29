@@ -181,6 +181,7 @@ export default {
 }
 </script>
 <script setup>
+// Макет для использования индивидуально в компонентах
 import { onMounted } from 'vue'
 import {
     initAccordions,
