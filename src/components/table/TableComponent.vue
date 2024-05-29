@@ -100,7 +100,7 @@
                         <td class="px-3 py-2">{{ item.quantity }}</td>
                         <td class="px-3 py-2">{{ item.weight }}</td>
                         <td class="px-3 py-2">{{ item.price }}</td>
-                        <td class="px-3 py-2">{{ item.subcategory_id }}</td>
+                        <td class="px-3 py-2">{{ item.subcategory ? item.subcategory.name : '-' }}</td>
                     </tr>
                     </tbody>
                 </table>
