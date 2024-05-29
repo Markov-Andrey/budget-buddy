@@ -72,14 +72,16 @@
           <RouterLink to="/"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:shadow-md hover:bg-gray-100 group">
             <IconDashboard
-                :classes="'w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'"/>
+                :classes="'w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900'"/>
             <span class="ms-3">Dashboard</span>
           </RouterLink>
         </li>
         <li>
           <RouterLink to="/add"
                       class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:shadow-md hover:bg-gray-100 group">
-            <span class="ms-3">Добавить чек</span>
+              <IconReceipt
+                      :classes="'w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900'"/>
+            <span class="ms-3">Обработка чеков</span>
           </RouterLink>
         </li>
         <li>
@@ -195,6 +197,7 @@ import {
     initPopovers,
     initTabs,
     initTooltips } from 'flowbite'
+import IconReceipt from "@/components/svg-icons/IconReceipt.vue";
 
 // Инициализация всех flowbite компонентов
 onMounted(() => {
