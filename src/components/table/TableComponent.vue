@@ -13,7 +13,7 @@
         <div :id="`accordion-open-${item.id}`" data-accordion="open">
             <!-- Accordion header -->
             <div :id="`accordion-open-heading-${item.id}`">
-                <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" :data-accordion-target="`#accordion-open-body-${item.id}`" :aria-expanded="`accordion-open-body-${item.id}` === activeAccordion ? 'true' : 'false'" :aria-controls="`accordion-open-body-${item.id}`">
+                <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" :data-accordion-target="`#accordion-open-body-${item.id}`" :aria-controls="`accordion-open-body-${item.id}`">
                     <div class="flex justify-between items-stretch w-full">
                     <div class="px-6 py-4">
                         <!-- Modal toggle -->
@@ -67,7 +67,7 @@
                         </router-link>
                     </div>
                 </div>
-                    <IconAccordion :classes="`w-3 h-3 rotate-180 shrink-0 ${activeAccordion === `accordion-open-body-${item.id}` ? 'active' : ''}`" />
+                    <IconAccordion :classes="`w-3 h-3 rotate-180 shrink-0`" />
                 </button>
             </div>
             <!-- Accordion body -->
