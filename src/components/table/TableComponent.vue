@@ -20,13 +20,13 @@
                     <div class="flex justify-between items-stretch w-full">
                         <div class="px-6 py-4">
                             <!-- Modal toggle -->
-                            <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button">
+                            <button :data-modal-target="`photo-modal-${item.id}`" :data-modal-toggle="`photo-modal-${item.id}`" type="button">
                                 <img v-if="item.image_path" :src="`${url}/${item.image_path}`" alt="Image thumbnail"
                                      class="thumbnail w-16 h-16 object-cover rounded"/>
                             </button>
 
                             <!-- Main modal -->
-                            <div id="default-modal" tabindex="-1" aria-hidden="true"
+                            <div :id="`photo-modal-${item.id}`" tabindex="-1" aria-hidden="true"
                                  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                 <div class="relative p-4 w-full max-w-2xl max-h-full">
                                     <!-- Modal content -->
@@ -35,7 +35,7 @@
                                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                                             <button type="button"
                                                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                                    data-modal-hide="default-modal">
+                                                    :data-modal-hide="`photo-modal-${item.id}`">
                                                 <IconClose classes="w-3 h-3"/>
                                             </button>
                                         </div>
