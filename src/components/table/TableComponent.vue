@@ -40,11 +40,19 @@
                         </div>
                     </div>
                 </td>
-                <td class="px-6 py-4">{{ item.processed }}</td>
-                <td class="px-6 py-4">{{ item.error }}</td>
-                <td class="px-6 py-4">{{ item.annulled }}</td>
-                <td class="px-6 py-4">{{ item.amount }}</td>
-                <td class="px-6 py-4 text-right flex gap-2">
+                <td class="px-6 py-4">
+                    <ElementBoolean :bool="item.processed" />
+                </td>
+                <td class="px-6 py-4">
+                    <ElementBoolean :bool="item.error" />
+                </td>
+                <td class="px-6 py-4">
+                    <ElementBoolean :bool="item.annulled" />
+                </td>
+                <td class="px-6 py-4">
+                    {{ item.amount }}
+                </td>
+                <td class="px-6 py-4">
                     <router-link v-if="isShow" :to="`/show/${item.id}`"
                                  class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show
                     </router-link>
@@ -99,6 +107,7 @@ import {
     initModals
 } from 'flowbite'
 import IconClose from "@/components/svg-icons/IconClose.vue";
+import ElementBoolean from "@/components/element/ElementBoolean.vue";
 
 onMounted(() => {
     initModals();
