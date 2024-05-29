@@ -17,7 +17,7 @@
             >
                 <td class="px-6 py-4">
                     <!-- Modal toggle -->
-                    <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="" type="button">
+                    <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button">
                         <img v-if="item.image_path" :src="`${url}/${item.image_path}`" alt="Image thumbnail" class="thumbnail w-16 h-16 object-cover rounded" />
                     </button>
 
@@ -51,6 +51,9 @@
                 </td>
                 <td class="px-6 py-4">
                     {{ item.amount }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ formatDate(item.datetime) }}
                 </td>
                 <td class="px-6 py-4">
                     <router-link v-if="isShow" :to="`/show/${item.id}`"
@@ -104,12 +107,15 @@ export default {
 <script setup>
 import { onMounted } from 'vue'
 import {
+    initAccordions,
     initModals
 } from 'flowbite'
 import IconClose from "@/components/svg-icons/IconClose.vue";
 import ElementBoolean from "@/components/element/ElementBoolean.vue";
+import {formatDate} from "../../services/dateFormatter";
 
 onMounted(() => {
+    initAccordions();
     initModals();
 })
 </script>

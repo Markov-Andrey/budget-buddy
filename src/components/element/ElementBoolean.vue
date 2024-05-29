@@ -2,7 +2,7 @@
     <div>
         <div
             :class="[
-        'inline-flex items-center justify-center w-6 h-6 rounded-full shadow-md'
+        'inline-flex items-center justify-center w-4 h-4 rounded-full shadow-md'
       ]"
             :style="gradientStyle"
         />
