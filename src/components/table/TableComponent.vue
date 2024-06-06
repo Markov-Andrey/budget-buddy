@@ -1,7 +1,7 @@
 <template>
 
     <table class="w-full">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <thead class="text-xs uppercase">
         <tr>
             <th v-for="(header, index) in headers" :key="index" scope="col" class="px-6 py-3">
                 {{ header }}
@@ -9,12 +9,12 @@
         </tr>
         </thead>
     </table>
-    <div v-for="(item, index) in data" :key="index" class="bg-white border-b hover:bg-gray-50">
+    <div v-for="(item, index) in data" :key="index" class="border-b">
         <div :id="`accordion-open-${item.id}`" data-accordion="open">
             <!-- Accordion header -->
             <div :id="`accordion-open-heading-${item.id}`">
                 <button type="button"
-                        class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 hover:bg-gray-100 gap-3"
+                        class="flex items-center justify-between w-full p-5 font-medium rtl:text-right border border-gray-200 gap-3"
                         :data-accordion-target="`#accordion-open-body-${item.id}`"
                         :aria-controls="`accordion-open-body-${item.id}`">
                     <div class="flex justify-between items-stretch w-full">
@@ -30,11 +30,11 @@
                                  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                 <div class="relative p-4 w-full max-w-2xl max-h-full">
                                     <!-- Modal content -->
-                                    <div class="relative bg-white rounded-lg shadow">
+                                    <div class="relative rounded-lg shadow">
                                         <!-- Modal header -->
                                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                                             <button type="button"
-                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                                    class="rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                                     :data-modal-hide="`photo-modal-${item.id}`">
                                                 <IconClose classes="w-3 h-3"/>
                                             </button>
@@ -83,7 +83,7 @@
             <div v-if="item.data" :id="`accordion-open-body-${item.id}`" class="hidden"
                  :aria-labelledby="`accordion-open-heading-${item.id}`">
                 <table v-if="item.data.length" class="p-5 border border-t-0 border-gray-200 dark:border-gray-700 w-full">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 w-full">
+                    <thead class="text-xs uppercase w-full">
                     <tr>
                         <th class="px-3 py-2" scope="col">№</th>
                         <th class="px-3 py-2" scope="col">Название</th>
@@ -94,7 +94,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="bg-white w-full" v-for="(item, index) in item.data" :key="index">
+                    <tr class="w-full" v-for="(item, index) in item.data" :key="index">
                         <td class="px-3 py-2">{{ index + 1 }}</td>
                         <td class="px-3 py-2">{{ item.name }}</td>
                         <td class="px-3 py-2">{{ item.quantity }}</td>

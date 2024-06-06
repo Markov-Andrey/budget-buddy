@@ -13,7 +13,7 @@
             <button
                 v-if="!isMobileDevice"
                 @click="openCamera"
-                class="mb-4 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+                class="mb-4 text-white px-4 py-2 rounded-full"
             >
                 <IconCamera />
             </button>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="p-2" v-if="imageUrls.length > 0">
-            <button @click="uploadImages" type="button" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">
+            <button @click="uploadImages" type="button" class="text-white font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">
                 Обработать
             </button>
         </div>

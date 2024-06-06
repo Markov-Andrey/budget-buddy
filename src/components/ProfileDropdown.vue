@@ -1,22 +1,22 @@
 <template>
-    <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+    <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
         <span class="sr-only">Open user menu</span>
         <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
     </button>
 
     <!-- Dropdown menu -->
-    <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+    <div id="dropdownAvatar" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44 dark:divide-gray-600">
+        <div class="px-4 py-3 text-sm dark:text-white">
             <div>Bonnie Green</div>
             <div class="font-medium truncate">name@flowbite.com</div>
         </div>
-        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+        <ul class="py-2 text-sm" aria-labelledby="dropdownUserAvatarButton">
             <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                <a href="#" class="block px-4 py-2">Dashboard</a>
             </li>
         </ul>
         <div class="py-2">
-            <a href="#" @click="logout" class="block px-4 py-2 hover:bg-gray-100">Sign out</a>
+            <a href="#" @click="logout" class="block px-4 py-2">Sign out</a>
         </div>
     </div>
 </template>
