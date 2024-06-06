@@ -14,7 +14,7 @@ export default {
     name: 'App',
     components: {
         Layout,
-        LoginForm
+        LoginForm,
     },
     data() {
         return {
