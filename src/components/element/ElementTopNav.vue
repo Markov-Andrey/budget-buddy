@@ -14,7 +14,7 @@
                         </svg>
                     </button>
                     <router-link to="/" class="flex ms-2 md:me-24">
-                        <img src="/assets/logo.svg" class="w-10 h-12 me-3" alt="Owl-Logo"/>
+                        <img src="/assets/owl_logo.png" class="h-12 me-3" alt="Owl-Logo"/>
                         <div class="flex flex-col">
                             <span class="text-2xl font-bold font-serif italic">Budget Buddy</span>
                         </div>
