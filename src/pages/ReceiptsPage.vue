@@ -1,39 +1,31 @@
 <template>
     <div class="p-4 sm:ml-64">
-        <div class="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+        <div class="flex gap-2 flex-wrap text-sm font-medium text-center text-gray-500">
+            <template v-for="tab in tabs" :key="tab.value">
                 <button
-                    @click="activeTab = 'loss'"
-                    :class="{'me-2 inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': activeTab === 'loss', 'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': activeTab !== 'loss'}"
+                        @click="activeTab = tab.value"
+                        :class="{
+                        'inline-block transition duration-75 px-4 py-3 rounded-lg': true,
+                        'text-white bg-orange-400': activeTab === tab.value,
+                        'hover:text-gray-900 hover:bg-green-300': activeTab !== tab.value
+                    }"
                 >
-                    Расходы
+                    {{ tab.label }}
                 </button>
-                <button
-                    @click="activeTab = 'income'"
-                    :class="{'me-2 inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': activeTab === 'income', 'inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white': activeTab !== 'income'}"
-                >
-                    Доходы
-                </button>
-                <button
-                    @click="activeTab = 'investments'"
-                    :class="{'me-2 inline-block px-4 py-3 text-white bg-blue-600 rounded-lg': activeTab === 'investments', 'inline-block px-4 py-3 text-gray-400 cursor-not-allowed dark:text-gray-500': activeTab !== 'investments'}"
-                    disabled
-                >
-                    Инвестиции
-                </button>
+            </template>
         </div>
         <div v-if="activeTab === 'loss'">
             <ReceiptInputComponent/>
-            <TableComponent v-if="receipts && receipts.data && receipts.data.length"
-                            :headers="['Чек', 'Обработка', 'Ошибка', 'Ануллирован', 'Сумма', 'Дата', '']"
-                            :data="receipts.data"
-                            is-edit is-delete
+            <TableComponent
+                    v-if="receipts && receipts.data && receipts.data.length"
+                    :headers="['Чек', 'Обработка', 'Ошибка', 'Ануллирован', 'Сумма', 'Дата', '']"
+                    :data="receipts.data"
+                    is-edit
+                    is-delete
             />
         </div>
         <div v-else-if="activeTab === 'income'">
             <p>Содержимое для вкладки "Доходы".</p>
-        </div>
-        <div v-else-if="activeTab === 'investments'">
-            <p>Содержимое для вкладки "Инвестиции".</p>
         </div>
     </div>
 </template>
@@ -51,8 +43,12 @@ export default {
     },
     data() {
         return {
-            activeTab: 'loss', // Устанавливаем начальную вкладку
+            activeTab: 'loss',
             receipts: [],
+            tabs: [
+                { value: 'loss', label: 'Расходы' },
+                { value: 'income', label: 'Доходы' }
+            ]
         };
     },
     async mounted() {
@@ -88,5 +84,5 @@ export default {
 </script>
 
 <style scoped>
-
+/* Add your scoped styles here */
 </style>
