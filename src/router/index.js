@@ -17,7 +17,7 @@ const routes = [
             },
             {
                 path: '/receipts',
-                name: 'Добавить чек',
+                name: 'Мои чеки',
                 component: ReceiptsPage
             },
             {
