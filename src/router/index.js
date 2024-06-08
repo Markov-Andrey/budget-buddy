@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HelloWorld from '../pages/HelloWorld.vue';
 import Layout from "@/components/Layout.vue";
 import ReceiptsPage from "@/pages/ReceiptsPage";
+import DiscordPage from "@/pages/DiscordPage.vue";
 
 const routes = [
     {
@@ -15,9 +16,14 @@ const routes = [
                 component: HelloWorld
             },
             {
-                path: '/add',
+                path: '/receipts',
                 name: 'Добавить чек',
                 component: ReceiptsPage
+            },
+            {
+                path: '/discord',
+                name: 'Добавить чек',
+                component: DiscordPage
             },
         ]
     }

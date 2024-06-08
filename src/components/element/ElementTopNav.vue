@@ -1,7 +1,7 @@
 <template>
     <nav class="complex-bg-orange fixed top-0 z-50 w-full shadow-lg">
         <div class="flex items-center justify-between">
-            <div class="right-border-block px-3 py-3">
+            <div class="right-border-block px-3 py-1">
                 <div class="right-border-block-content flex items-center justify-start rtl:justify-end">
                     <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
                             type="button"
@@ -25,8 +25,7 @@
                 </div>
             </div>
             <div class="flex items-center">
-                <ElementBalance/>
-                <div class="flex items-center ms-3">
+                <div class="flex items-center mx-3">
                     <ProfileDropdown />
                     <div
                         class="z-50 hidden my-4 text-base list-none divide-y divide-gray-100 rounded shadow dark:divide-gray-600"
@@ -69,12 +68,11 @@
 </template>
 
 <script>
-import ElementBalance from "@/components/element/ElementBalance.vue";
 import ProfileDropdown from "@/components/ProfileDropdown.vue";
 
 export default {
     name: "ElementTopNav",
-    components: {ProfileDropdown, ElementBalance}
+    components: {ProfileDropdown}
 }
 </script>
 

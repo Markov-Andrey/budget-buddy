@@ -19,6 +19,8 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import IconMenuReceipt from "@/components/svg-icons/IconMenuReceipt.vue";
 import IconMenuDashboard from "@/components/svg-icons/IconMenuDashboard.vue";
+import IconMenuCamera from "@/components/svg-icons/IconMenuCamera.vue";
+import IconMenuDiscord from "@/components/svg-icons/IconMenuDiscord.vue";
 
 export default {
     name: "ButtonMenu",
@@ -51,6 +53,8 @@ export default {
 const iconMap = {
     IconMenuReceipt,
     IconMenuDashboard,
+    IconMenuCamera,
+    IconMenuDiscord,
 };
 </script>
 
