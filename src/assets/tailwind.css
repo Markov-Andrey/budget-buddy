@@ -6,3 +6,48 @@ body {
     background-color: #fdffff;
     color: #070f10;
 }
+.complex-bg-orange {
+    background: linear-gradient(
+            to right,
+            #ff6000 0%,
+            #ffa040 20%,
+            #e78b49 40%,
+            #ff7733 60%,
+            #ffa040 80%,
+            #ff6000 100%
+    );
+}
+.complex-bg-green {
+    background: linear-gradient(
+            to top,
+            #aaf0d1 0%,
+            #98e6c7 20%,
+            #86dcc0 40%,
+            #74d2b8 60%,
+            #62c8b0 80%,
+            #50bfa8 100%
+    );
+}
+
+.right-border-block {
+    background-color: #e5e5e5;
+    transform: skewX(25deg);
+}
+.right-border-block-content {
+    background-color: #e5e5e5;
+    transform: skewX(-25deg);
+    z-index: 1;
+}
+.right-border-block:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -25px;
+    width: 30px;
+    height: 100%;
+    background-color: #e5e5e5;
+    z-index: 10;
+}
+.text-shadow {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+}

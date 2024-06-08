@@ -1,11 +1,11 @@
 <template>
     <div class="grid">
         <div v-if="income" class="flex gap-2">
-            <div class="font-bold">Средний месячный заработок:</div>
+            <div class="font-bold">Ср-мес заработок:</div>
             <div>{{ income }}</div>
         </div>
         <div v-if="loss" class="flex gap-2">
-            <div class="font-bold">Средние месячные траты:</div>
+            <div class="font-bold">Ср-мес траты:</div>
             <div>{{ loss }}</div>
         </div>
     </div>

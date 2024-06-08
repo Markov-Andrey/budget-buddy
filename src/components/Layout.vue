@@ -2,27 +2,11 @@
   <ElementTopNav/>
 
   <aside id="logo-sidebar"
-         class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200 sm:translate-x-0"
+         class="complex-bg-green fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full sm:translate-x-0"
          aria-label="Sidebar">
-    <div class="h-full px-3 pb-4 overflow-y-auto">
-      <ul class="space-y-2 font-medium">
-        <li>
-          <RouterLink to="/"
-                      class="flex items-center p-2 rounded-lg dark:text-white hover:shadow-md group">
-            <IconDashboard
-                :classes="'w-5 h-5 transition duration-75 group-hover:text-gray-900'"/>
-            <span class="ms-3">Dashboard</span>
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/add"
-                      class="flex items-center p-2 rounded-lg dark:text-white hover:shadow-md group">
-              <IconReceipt
-                      :classes="'w-5 h-5 transition duration-75 group-hover:text-gray-900'"/>
-            <span class="ms-3">Обработка чеков</span>
-          </RouterLink>
-        </li>
-        <li>
+    <div class="h-full pb-4 overflow-y-auto font-medium">
+        <ButtonMenu route="/" buttonText="Dashboard" iconName="IconMenuDashboard" />
+          <ButtonMenu route="/add" buttonText="Обработка чеков" iconName="IconMenuReceipt" />
           <RouterLink to="#"
                       class="flex items-center p-2 rounded-lg dark:text-white group">
             <svg
@@ -35,8 +19,6 @@
             <span
                 class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium rounded-full">Pro</span>
           </RouterLink>
-        </li>
-        <li>
           <a href="#"
              class="flex items-center p-2 rounded-lg dark:text-white group">
             <svg
@@ -49,8 +31,6 @@
             <span
                 class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 rounded-full dark:text-blue-300">3</span>
           </a>
-        </li>
-        <li>
           <a href="#"
              class="flex items-center p-2 rounded-lg dark:text-white group">
             <svg
@@ -61,8 +41,6 @@
             </svg>
             <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
           </a>
-        </li>
-        <li>
           <a href="#"
              class="flex items-center p-2 rounded-lg dark:text-white group">
             <svg
@@ -73,8 +51,6 @@
             </svg>
             <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
           </a>
-        </li>
-        <li>
           <a href="#"
              class="flex items-center p-2 rounded-lg dark:text-white group">
             <svg
@@ -85,8 +61,6 @@
             </svg>
             <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
           </a>
-        </li>
-        <li>
           <a href="#"
              class="flex items-center p-2 rounded-lg dark:text-white group">
             <svg
@@ -100,8 +74,6 @@
             </svg>
             <span class="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
           </a>
-        </li>
-      </ul>
     </div>
   </aside>
 
@@ -111,14 +83,13 @@
 </template>
 
 <script>
-import IconDashboard from "@/components/svg-icons/IconDashboard";
 import ElementTopNav from "@/components/element/ElementTopNav.vue";
-import IconReceipt from "@/components/svg-icons/IconReceipt.vue";
+import ButtonMenu from "@/components/buttons/ButtonMenu.vue";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Layout",
-  components: {ElementTopNav, IconDashboard}
+  components: {ElementTopNav, ButtonMenu}
 }
 </script>
 <script setup>

@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "IconDashboard",
+  name: "IconMenuDashboard",
   props: {
     classes: {
       type: [String, Object, Array],

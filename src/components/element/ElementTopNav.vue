@@ -1,8 +1,8 @@
 <template>
-    <nav class="fixed top-0 z-50 w-full border-b border-gray-200 bg-transparent">
-        <div class="px-3 py-3 lg:px-5 lg:pl-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center justify-start rtl:justify-end">
+    <nav class="complex-bg-orange fixed top-0 z-50 w-full shadow-lg">
+        <div class="flex items-center justify-between">
+            <div class="right-border-block px-3 py-3">
+                <div class="right-border-block-content flex items-center justify-start rtl:justify-end">
                     <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
                             type="button"
                             class="inline-flex items-center p-2 text-sm rounded-lg sm:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400">
@@ -13,51 +13,54 @@
                                   d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                         </svg>
                     </button>
-                    <router-link to="/" class="flex ms-2 md:me-24">
-                        <img src="/assets/owl_logo.png" class="h-12 me-3 rounded-full border-2 shadow-lg overflow-visible" alt="Owl-Logo"/>
-                        <div class="flex flex-col">
-                            <span class="text-2xl font-bold font-serif italic">OwlBudget</span>
+                    <router-link to="/" class="flex ms-3 me-5 group">
+                        <img src="/assets/owl_logo.png"
+                             class="h-12 me-3 rounded-full border-2 border-green-400 group-hover:border-orange-500 transition duration-300 ease-in-out shadow-lg overflow-visible"
+                             alt="Owl-Logo"
+                        />
+                        <div class="flex flex-col justify-center">
+                            <span class="text-2xl text-shadow text-green-400 group-hover:text-orange-500 transition duration-300 ease-in-out font-bold font-serif">Owl-Budget</span>
                         </div>
                     </router-link>
                 </div>
-                <div class="flex items-center">
-                    <ElementBalance />
-                    <div class="flex items-center ms-3">
-                        <ProfileDropdown />
-                        <div
-                                class="z-50 hidden my-4 text-base list-none divide-y divide-gray-100 rounded shadow dark:divide-gray-600"
-                                id="dropdown-user">
-                            <div class="px-4 py-3" role="none">
-                                <p class="text-sm" role="none">
-                                    Neil Sims
-                                </p>
-                                <p class="text-sm font-medium truncate" role="none">
-                                    neil.sims@flowbite.com
-                                </p>
-                            </div>
-                            <ul class="py-1" role="none">
-                                <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 text-sm"
-                                       role="menuitem">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 text-sm"
-                                       role="menuitem">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 text-sm"
-                                       role="menuitem">Earnings</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 text-sm"
-                                       role="menuitem">Sign out</a>
-                                </li>
-                            </ul>
+            </div>
+            <div class="flex items-center">
+                <ElementBalance/>
+                <div class="flex items-center ms-3">
+                    <ProfileDropdown />
+                    <div
+                        class="z-50 hidden my-4 text-base list-none divide-y divide-gray-100 rounded shadow dark:divide-gray-600"
+                        id="dropdown-user">
+                        <div class="px-4 py-3" role="none">
+                            <p class="text-sm" role="none">
+                                Neil Sims
+                            </p>
+                            <p class="text-sm font-medium truncate" role="none">
+                                neil.sims@flowbite.com
+                            </p>
                         </div>
+                        <ul class="py-1" role="none">
+                            <li>
+                                <a href="#"
+                                   class="block px-4 py-2 text-sm"
+                                   role="menuitem">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="block px-4 py-2 text-sm"
+                                   role="menuitem">Settings</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="block px-4 py-2 text-sm"
+                                   role="menuitem">Earnings</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="block px-4 py-2 text-sm"
+                                   role="menuitem">Sign out</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

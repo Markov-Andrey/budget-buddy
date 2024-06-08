@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "IconReceipt",
+    name: "IconMenuReceipt",
     props: {
         classes: {
             type: [String, Object, Array],

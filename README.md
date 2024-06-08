@@ -1,5 +1,5 @@
 🇺🇸 English Version
-# 🦉💰 OwlBudget
+# 🦉💰 Owl-Budget
 ## Your Nest for Financial Stability!
 A project for those who manage their financial flows and want pinpoint accuracy in budget planning.
 
@@ -14,7 +14,7 @@ A project for those who manage their financial flows and want pinpoint accuracy 
 ---
 
 🇷🇺 Русская версия
-# 🦉💰 OwlBudget
+# 🦉💰 Owl-Budget
 ## Гнездышко финансового благополучия!
 Проект для тех, кто управляет своими денежными потоками и хочет ювелирной точности в планировании бюджета
 
