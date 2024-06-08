@@ -8,6 +8,7 @@
             <ButtonMenu route="/" buttonText="Dashboard" iconName="IconMenuDashboard"/>
             <ButtonMenu route="/discord" buttonText="Discord" iconName="IconMenuDiscord"/>
             <ButtonMenu route="/receipts" buttonText="Мои чеки" iconName="IconMenuReceipt"/>
+            <ButtonMenu route="/personal-info" buttonText="Личная статистика" iconName="IconMenuStatistics"/>
         </div>
     </aside>
 

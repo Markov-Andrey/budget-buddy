@@ -19,7 +19,7 @@ body {
 }
 .complex-bg-green {
     background: linear-gradient(
-            to top,
+            to bottom,
             #aaf0d1 0%,
             #98e6c7 20%,
             #86dcc0 40%,

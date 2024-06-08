@@ -4,6 +4,7 @@ import HelloWorld from '../pages/HelloWorld.vue';
 import Layout from "@/components/Layout.vue";
 import ReceiptsPage from "@/pages/ReceiptsPage";
 import DiscordPage from "@/pages/DiscordPage.vue";
+import PersonalInfoPage from "@/pages/PersonalInfoPage.vue";
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
                 path: '/discord',
                 name: 'Добавить чек',
                 component: DiscordPage
+            },
+            {
+                path: '/personal-info',
+                name: 'Личная информация',
+                component: PersonalInfoPage
             },
         ]
     }

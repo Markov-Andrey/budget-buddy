@@ -17,10 +17,11 @@
 <script>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import IconMenuReceipt from "@/components/svg-icons/IconMenuReceipt.vue";
-import IconMenuDashboard from "@/components/svg-icons/IconMenuDashboard.vue";
-import IconMenuCamera from "@/components/svg-icons/IconMenuCamera.vue";
-import IconMenuDiscord from "@/components/svg-icons/IconMenuDiscord.vue";
+import IconMenuReceipt from "@/components/svg-icons/menu/IconMenuReceipt.vue";
+import IconMenuDashboard from "@/components/svg-icons/menu/IconMenuDashboard.vue";
+import IconMenuCamera from "@/components/svg-icons/menu/IconMenuCamera.vue";
+import IconMenuDiscord from "@/components/svg-icons/menu/IconMenuDiscord.vue";
+import IconMenuStatistics from "@/components/svg-icons/menu/IconMenuStatistics.vue";
 
 export default {
     name: "ButtonMenu",
@@ -55,6 +56,7 @@ const iconMap = {
     IconMenuDashboard,
     IconMenuCamera,
     IconMenuDiscord,
+    IconMenuStatistics,
 };
 </script>
 
