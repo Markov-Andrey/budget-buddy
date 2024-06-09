@@ -49,5 +49,5 @@ npm run lint
 ```
 
 ## Screenshots:
-<img src="https://github.com/Markov-Andrey/budget-buddy/blob/master/public/assets/1.png" alt="1" height="700" width="auto">
-<img src="https://github.com/Markov-Andrey/budget-buddy/blob/master/public/assets/2.png" alt="2" height="700" width="auto">
+<img src="https://github.com/Markov-Andrey/budget-buddy/blob/master/public/assets/1.png" alt="1" height="650" width="auto">
+<img src="https://github.com/Markov-Andrey/budget-buddy/blob/master/public/assets/2.png" alt="2" height="650" width="auto">
