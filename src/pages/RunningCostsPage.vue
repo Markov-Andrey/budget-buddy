@@ -21,7 +21,8 @@ import {
     CategoryScale,
     LinearScale,
     PointElement,
-} from 'chart.js'
+} from 'chart.js';
+import axiosInstance from "@/axios-instance";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, LineElement, CategoryScale, LinearScale, PointElement)
 
@@ -44,8 +45,7 @@ export default {
                         },
                     },
                     title: {
-                        display: true,
-                        text: 'Mixed Chart Example'
+                        display: false,
                     },
                 },
                 scales: {
@@ -64,11 +64,47 @@ export default {
             },
             mixedChartData1: null,
             mixedChartData2: null,
+            data: null,
+            AME: null, // Средний расход в месяц - Avg. Monthly Expense (AME)
+            AMI: null, // Средний доход в месяц - Avg. Monthly Income (AMI)
+            CEA: null, // Накопительный массив расходов - Cumulative Expense Array (CEA)
+            ADE: null, // Средний расход в день - Avg. Daily Expense (ADE)
+            ADI: null, // Средний доход в день - Avg. Daily Income (ADI)
+            DE: null, // Расход в день - Daily Expense (DE)
+            bgColors: [], // Массив цветовых ключей
+            labels: [], // Массив подписей дней
+            dataLength: null, // Количество дней
         }
     },
-    mounted() {
-        this.mixedChartData1 = this.getMixedChartData1();
-        this.mixedChartData2 = this.getMixedChartData2();
+    async mounted() {
+        try {
+            const response = await axiosInstance.get('/info/running-costs');
+            console.log('Running costs success:', response.data);
+            this.data = response.data;
+
+            // Initialize labels and dataLength
+            this.labels = this.daysInMonth(new Date());
+            this.dataLength = this.labels.length;
+
+            // generate data to charts
+            this.DE = this.data.dailyExpenses;
+            this.CEA = this.data.cumulativeExpensesArray;
+            const lossAverageDay = this.data.lossAverage / this.dataLength;
+            const incomeAverageDay = this.data.incomeAverage / this.dataLength;
+            this.ADE = Array.from({ length: this.dataLength }, () => lossAverageDay);
+            this.ADI = Array.from({ length: this.dataLength }, () => incomeAverageDay);
+            this.AME = Array.from({ length: this.dataLength }, () => this.data.lossAverage);
+            this.AMI = Array.from({ length: this.dataLength }, () => this.data.incomeAverage);
+            this.bgColors = this.DE.map((de, index) => this.getColor(de, this.ADE[index], this.ADI[index]));
+
+            // Generate chart data
+            this.mixedChartData1 = this.getCumulativeChartData();
+            this.mixedChartData2 = this.getDayChartData();
+
+
+        } catch (error) {
+            console.error('Running costs error:', error);
+        }
     },
     methods: {
         daysInMonth(date = new Date()) {
@@ -77,98 +113,73 @@ export default {
             const daysInMonth = new Date(year, month, 0).getDate();
             return Array.from({ length: daysInMonth }, (_, i) => i + 1);
         },
-        getMixedChartData1(date = new Date()) {
-            const labels = this.daysInMonth(date);
-            const dataLength = labels.length;
-
-            const AME = Array.from({ length: dataLength }, () => Math.floor(1500));
-            const AMI = Array.from({ length: dataLength }, () => Math.floor(2000));
-
-            const arr = Array.from({ length: dataLength }, () => Math.floor(Math.random() * 100) + 1);
-            const CEA = this.accumulateRandomExpenses(arr);
-
+        getCumulativeChartData() {
             return {
-                labels,
+                labels: this.labels,
                 datasets: [
                     {
                         type: 'line',
                         label: 'Ср-расх/мес',
-                        data: AME,
+                        data: this.AME,
                         borderColor: 'rgb(255,145,0)',
-                        // backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         fill: true,
                     },
                     {
                         type: 'line',
                         label: 'Ср-дох/мес',
-                        data: AMI,
+                        data: this.AMI,
                         borderColor: 'rgb(87,224,175)',
-                        // backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         fill: true,
                     },
                     {
                         type: 'line',
                         label: 'Накопление расходов',
-                        data: CEA,
+                        data: this.CEA,
                         borderColor: 'rgb(147,147,147)',
-                        backgroundColor: ['rgb(246,148,19)', 'rgb(35,213,149)'],
+                        backgroundColor: this.bgColors,
                         fill: true,
                     },
                 ],
             };
         },
-        getMixedChartData2(date = new Date()) {
-            const labels = this.daysInMonth(date);
-            const dataLength = labels.length;
-            const DE = Array.from({ length: dataLength }, () => Math.floor(Math.random() * 100) + 1);
-
-            const ADE = Array.from({ length: dataLength }, () => 50);
-            const ADI = Array.from({ length: dataLength }, () => 83);
-
+        getDayChartData() {
             return {
-                labels,
+                labels: this.labels,
                 datasets: [
                     {
                         type: 'line',
                         label: 'Ср-расх/дн',
-                        data: ADE,
+                        data: this.ADE,
                         borderColor: 'rgb(255,145,0)',
-                        // backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         fill: true,
                     },
                     {
                         type: 'line',
                         label: 'Ср-дох/дн',
-                        data: ADI,
+                        data: this.ADI,
                         borderColor: 'rgb(87,224,175)',
-                        // backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         fill: true,
                     },
                     {
                         type: 'bar',
                         label: 'Расх/дн',
-                        data: DE,
-                        backgroundColor: ['rgba(246,167,19,0.75)', 'rgba(246,238,105,0.75)', 'rgb(104,245,190,0.75)'],
+                        data: this.DE,
+                        backgroundColor: this.bgColors,
                     },
                 ],
             };
         },
-        accumulateRandomExpenses(data) {
-            let accumulated = [];
-            let sum = 0;
-            for (let i = 0; i < data.length; i++) {
-                sum += data[i];
-                accumulated.push(sum);
+        getColor(dailyExpense, averageDailyExpense, averageDailyIncome) {
+            if (dailyExpense < averageDailyExpense && dailyExpense < averageDailyIncome) {
+                return 'rgb(104,245,190,1)';
+            } else if (dailyExpense > averageDailyExpense && dailyExpense < averageDailyIncome) {
+                return 'rgba(246,238,105,1)';
+            } else if (dailyExpense > averageDailyExpense && dailyExpense > averageDailyIncome) {
+                return 'rgba(246,167,19,1)';
             }
-            return accumulated;
+            return 'rgba(0,0,0,0)';
         },
-    }
+    },
 }
-// Средний доход в месяц - Avg. Monthly Income (AMI)
-// Средний расход в месяц - Avg. Monthly Expense (AME)
-// Средний доход в день - Avg. Daily Income (ADI)
-// Средний расход в день - Avg. Daily Expense (ADE)
-// Накопительный массив расходов - Cumulative Expense Array (CEA)
-// Расход в день - Daily Expense (DE)
 </script>
 
