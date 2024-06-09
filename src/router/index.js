@@ -5,6 +5,7 @@ import Layout from "@/components/Layout.vue";
 import ReceiptsPage from "@/pages/ReceiptsPage";
 import DiscordPage from "@/pages/DiscordPage.vue";
 import PersonalInfoPage from "@/pages/PersonalInfoPage.vue";
+import RunningCostsPage from "@/pages/RunningCostsPage.vue";
 
 const routes = [
     {
@@ -25,6 +26,11 @@ const routes = [
                 path: '/discord',
                 name: 'Добавить чек',
                 component: DiscordPage
+            },
+            {
+                path: '/running-costs',
+                name: 'Текучка',
+                component: RunningCostsPage
             },
             {
                 path: '/personal-info',
