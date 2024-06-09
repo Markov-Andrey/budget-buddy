@@ -1,10 +1,25 @@
 <template>
     <div class="p-4 sm:ml-64">
-        <div v-if="mixedChartData1" class="w-full flex gap-5">
-            <Bar :data="mixedChartData1" :options="options"/>
-        </div>
-        <div v-if="mixedChartData2" class="w-full flex gap-5">
-            <Bar :data="mixedChartData2" :options="options"/>
+        <div class="grid gap-5 p-2">
+            <div v-if="cumulativeChartData" class="w-full grid gap-5">
+                <div class="flex gap-2 justify-center">
+                    <h1 class="font-bold text-2xl">График накапливания расходов</h1>
+                    <div>
+                        <ElementHint tooltip-id="cumulative" :hint="tooltipCumulativeText"/>
+                    </div>
+                </div>
+                <Bar class="max-h-[500px]" :data="cumulativeChartData" :options="options"/>
+            </div>
+            <hr>
+            <div v-if="dayChartData" class="w-full grid gap-5">
+                <div class="flex gap-2 justify-center">
+                    <h1 class="font-bold text-2xl">График ежедневных расходов</h1>
+                    <div>
+                        <ElementHint tooltip-id="days" :hint="tooltipDayText"/>
+                    </div>
+                </div>
+                <Bar class="max-h-[500px]" :data="dayChartData" :options="options"/>
+            </div>
         </div>
     </div>
 </template>
@@ -23,14 +38,19 @@ import {
     PointElement,
 } from 'chart.js';
 import axiosInstance from "@/axios-instance";
+import {initTooltips} from 'flowbite';
+import { nextTick } from 'vue';
+import ElementHint from "@/components/element/ElementHint.vue";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, LineElement, CategoryScale, LinearScale, PointElement)
 
 export default {
     name: 'MixedChart',
-    components: { Bar },
+    components: { Bar, ElementHint },
     data() {
         return {
+            tooltipCumulativeText: "Отслеживайте накопление расходов в течение месяца, сравнивая их с месячными расходами и доходами. Это поможет контролировать лимит средств и избегать излишеств расходов.",
+            tooltipDayText: "Этот график поможет следить за ежедневными расходами. По возможности старайтесь не превышать средние показатели доходов, а в идеале - и расходов",
             options: {
                 responsive: true,
                 plugins: {
@@ -62,8 +82,8 @@ export default {
                     },
                 },
             },
-            mixedChartData1: null,
-            mixedChartData2: null,
+            cumulativeChartData: null,
+            dayChartData: null,
             data: null,
             AME: null, // Средний расход в месяц - Avg. Monthly Expense (AME)
             AMI: null, // Средний доход в месяц - Avg. Monthly Income (AMI)
@@ -98,10 +118,11 @@ export default {
             this.bgColors = this.DE.map((de, index) => this.getColor(de, this.ADE[index], this.ADI[index]));
 
             // Generate chart data
-            this.mixedChartData1 = this.getCumulativeChartData();
-            this.mixedChartData2 = this.getDayChartData();
+            this.cumulativeChartData = this.getCumulativeChartData();
+            this.dayChartData = this.getDayChartData();
 
 
+            nextTick(() => {initTooltips();});
         } catch (error) {
             console.error('Running costs error:', error);
         }
