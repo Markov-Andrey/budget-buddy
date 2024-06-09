@@ -48,4 +48,9 @@ npm run build
 npm run lint
 ```
 
+## Screenshots:
+<img src="https://github.com/Markov-Andrey/budget-buddy-back/raw/master/public/images/3.png" alt="3" height="300" width="auto">
+<img src="https://github.com/Markov-Andrey/budget-buddy-back/raw/master/public/images/4.png" alt="4" height="300" width="auto">
+<img src="https://github.com/Markov-Andrey/budget-buddy-back/raw/master/public/images/5.png" alt="5" height="300" width="auto">
+<img src="https://github.com/Markov-Andrey/budget-buddy-back/raw/master/public/images/6.png" alt="6" height="300" width="auto">
 
