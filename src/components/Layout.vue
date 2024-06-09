@@ -9,7 +9,7 @@
             <ButtonMenu route="/discord" buttonText="Discord" iconName="IconMenuDiscord"/>
             <ButtonMenu route="/receipts" buttonText="Мои чеки" iconName="IconMenuReceipt"/>
             <ButtonMenu route="/running-costs" buttonText="Текущие расходы" iconName="IconMenuStatistics"/>
-            <ButtonMenu route="/personal-info" buttonText="Личная статистика" iconName="IconMenuStatistics"/>
+            <ButtonMenu route="/personal-info" buttonText="Личная статистика" iconName="IconMenuChart"/>
         </div>
     </aside>
 

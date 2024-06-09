@@ -22,6 +22,7 @@ import IconMenuDashboard from "@/components/svg-icons/menu/IconMenuDashboard.vue
 import IconMenuCamera from "@/components/svg-icons/menu/IconMenuCamera.vue";
 import IconMenuDiscord from "@/components/svg-icons/menu/IconMenuDiscord.vue";
 import IconMenuStatistics from "@/components/svg-icons/menu/IconMenuStatistics.vue";
+import IconMenuChart from "@/components/svg-icons/menu/IconMenuChart.vue";
 
 export default {
     name: "ButtonMenu",
@@ -57,6 +58,7 @@ const iconMap = {
     IconMenuCamera,
     IconMenuDiscord,
     IconMenuStatistics,
+    IconMenuChart,
 };
 </script>
 
