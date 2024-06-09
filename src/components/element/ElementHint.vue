@@ -2,6 +2,7 @@
     <button
         :data-tooltip-target="tooltipId"
         type="button"
+        :data-tooltip-placement="validPlacement ? placement : ''"
         class="transition duration-200 font-bold text-[25px] text-white w-8 h-8 bg-orange-400 hover:bg-green-400 rounded-full text-sm text-center"
     >
         ?
@@ -23,10 +24,16 @@ export default {
     name: "ElementHint",
     props: {
         hint: String,
+        placement: String,
         tooltipId: {
             type: String,
             required: true
         },
+    },
+    computed: {
+        validPlacement() {
+            return ['top', 'right', 'bottom', 'left'].includes(this.placement);
+        }
     }
 }
 </script>

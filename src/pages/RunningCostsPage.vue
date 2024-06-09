@@ -1,24 +1,47 @@
 <template>
     <div class="p-4 sm:ml-64">
         <div class="grid gap-5 p-2">
-            <div v-if="cumulativeChartData" class="w-full grid gap-5">
-                <div class="flex gap-2 justify-center">
-                    <h1 class="font-bold text-2xl">График накапливания расходов</h1>
-                    <div>
-                        <ElementHint tooltip-id="cumulative" :hint="tooltipCumulativeText"/>
+            <div class="grid gap-5">
+                <div v-if="cumulativeChartData" class="w-full grid gap-5">
+                    <div class="flex gap-2 justify-center">
+                        <h1 class="font-bold text-2xl">График накапливания расходов</h1>
+                        <div>
+                            <ElementHint tooltip-id="cumulative" placement="bottom" :hint="tooltipCumulativeText"/>
+                        </div>
                     </div>
+                    <Bar class="max-h-[500px]" :data="cumulativeChartData" :options="options"/>
                 </div>
-                <Bar class="max-h-[500px]" :data="cumulativeChartData" :options="options"/>
+                <div v-if="dayChartData" class="w-full grid gap-5">
+                    <div class="flex gap-2 justify-center">
+                        <h1 class="font-bold text-2xl">График ежедневных расходов</h1>
+                        <div>
+                            <ElementHint tooltip-id="days" placement="bottom" :hint="tooltipDayText"/>
+                        </div>
+                    </div>
+                    <Bar class="max-h-[500px]" :data="dayChartData" :options="options"/>
+                </div>
             </div>
             <hr>
-            <div v-if="dayChartData" class="w-full grid gap-5">
-                <div class="flex gap-2 justify-center">
-                    <h1 class="font-bold text-2xl">График ежедневных расходов</h1>
-                    <div>
-                        <ElementHint tooltip-id="days" :hint="tooltipDayText"/>
-                    </div>
+            <div class="flex">
+                <div class="w-1/2" v-if="topPriceItem && topPriceItem.length">
+                    <h1 class="font-bold text-2xl">Топ дорогих трат в текущем месяце</h1>
+                    <table class="w-full text-left rounded-lg overflow-hidden">
+                        <tr class="text-xs uppercase bg-orange-400">
+                            <th class="px-2 py-1">№</th>
+                            <th class="px-2 py-1">Наименование</th>
+                            <th class="px-2 py-1">Цена</th>
+                            <th class="px-2 py-1">Вес</th>
+                        </tr>
+                        <tr class="transition duration-75 bg-green-200 border-b border-orange-400 hover:bg-orange-400 hover:text-white hover:shadow-lg"
+                            v-for="(item, index) in topPriceItem" :key="index+1"
+                        >
+                            <td class="px-2 py-1">{{ index + 1 }}</td>
+                            <td class="px-2 py-1">{{ item.name }}</td>
+                            <td class="px-2 py-1">{{ item.price }}</td>
+                            <td class="px-2 py-1">{{ item.weight !== 0 && item.weight !== '0' ? item.weight : '-' }}</td>
+                        </tr>
+                    </table>
                 </div>
-                <Bar class="max-h-[500px]" :data="dayChartData" :options="options"/>
             </div>
         </div>
     </div>
@@ -82,6 +105,7 @@ export default {
                     },
                 },
             },
+            topPriceItem: [],
             cumulativeChartData: null,
             dayChartData: null,
             data: null,
@@ -101,6 +125,9 @@ export default {
             const response = await axiosInstance.get('/info/running-costs');
             console.log('Running costs success:', response.data);
             this.data = response.data;
+
+            // add info
+            this.topPriceItem = this.data.topPriceItem;
 
             // Initialize labels and dataLength
             this.labels = this.daysInMonth(new Date());
