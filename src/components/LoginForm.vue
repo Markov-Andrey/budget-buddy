@@ -9,7 +9,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" v-model="password" required>
             </div>
-            <button type="submit">Login</button>
+            <button class="bg-orange-500 active:bg-green-300 p-3" type="submit">Login</button>
             <div v-if="error" class="error">{{ error }}</div>
         </form>
     </div>
@@ -38,13 +38,23 @@ export default {
                 if (response.status === 200) {
                     localStorage.setItem('token', response.data.token);
                     this.$emit('authenticated');
+                    window.location.reload();
                 }
             } catch (error) {
-                if (error.response) {
+                // Добавляем дополнительное логирование
+                console.log('Error:', error);
+
+                // Проверяем если это CORS ошибка
+                if (error.message && error.message.includes('Network Error')) {
+                    console.error('Possible CORS error:', error);
+                    alert('Login failed: Possible CORS error');
+                } else if (error.response) {
                     console.log('Error response:', error.response);
+                    alert('Login failed: ' + (error.response.data.message || 'Invalid credentials'));
                     this.error = error.response.data.message || 'Invalid credentials';
                 } else {
                     console.log('Error message:', error.message);
+                    alert('Login failed: Request setup error');
                     this.error = 'Request setup error';
                 }
             }
