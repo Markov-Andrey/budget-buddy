@@ -36,6 +36,17 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Пагинация -->
+        <div class="flex justify-between items-center mt-4">
+            <div>
+                <button @click="fetchPrevPage" :disabled="!hasPrevPage" class="px-4 py-2 bg-gray-200 rounded">Previous</button>
+                <button @click="fetchNextPage" :disabled="!hasNextPage" class="px-4 py-2 bg-gray-200 rounded">Next</button>
+            </div>
+            <div>
+                Page {{ currentPage }} of {{ totalPages }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -51,21 +62,36 @@ export default {
             newIncome: {
                 amount: null,
                 subcategory_id: null
-            }
+            },
+            currentPage: 1,
+            perPage: 10,
+            totalPages: 1
         };
     },
     computed: {
         incomes() {
             return this.income.data || [];
+        },
+        hasPrevPage() {
+            return this.currentPage > 1;
+        },
+        hasNextPage() {
+            return this.currentPage < this.totalPages;
         }
     },
     methods: {
         async fetchIncome() {
             try {
-                const response = await axiosInstance.get('/income/index');
+                const response = await axiosInstance.get('/income/index', {
+                    params: {
+                        page: this.currentPage,
+                        per_page: this.perPage
+                    }
+                });
                 if (response && response.data && response.data.incomes) {
                     this.income = response.data.incomes;
                     this.subcategories = response.data.subcategories;
+                    this.totalPages = response.data.incomes.last_page;
                 } else {
                     console.error('Invalid response format:', response);
                 }
@@ -73,26 +99,24 @@ export default {
                 console.error('Error fetching income:', error);
             }
         },
-        async addIncome() {
-            // try {
-            //     const response = await axiosInstance.post('/income/add', this.newIncome);
-            //     if (response && response.status === 200) {
-            //         // Очищаем форму и обновляем данные
-            //         this.newIncome = {
-            //             amount: null,
-            //             subcategory_id: null
-            //         };
-            //         this.fetchIncome();
-            //     } else {
-            //         console.error('Failed to add income. Server response:', response);
-            //     }
-            // } catch (error) {
-            //     console.error('Error adding income:', error);
-            // }
+        async fetchPrevPage() {
+            if (this.hasPrevPage) {
+                this.currentPage--;
+                this.fetchIncome();
+            }
         },
-        getSubcategoryName(subcategoryId) {
-            const subcategory = this.subcategories.find(sub => sub.id === subcategoryId);
-            return subcategory ? subcategory.name : 'Unknown';
+        async fetchNextPage() {
+            if (this.hasNextPage) {
+                this.currentPage++;
+                this.fetchIncome();
+            }
+        },
+        async addIncome() {
+            // Код для добавления новой записи
+        },
+        getSubcategoryName(subcategory_id) {
+            const subcategory = this.subcategories.find(sub => sub.id === subcategory_id);
+            return subcategory ? subcategory.name : '-';
         }
     },
     mounted() {
