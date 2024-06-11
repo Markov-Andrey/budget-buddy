@@ -41,22 +41,7 @@ export default {
                     window.location.reload();
                 }
             } catch (error) {
-                // Добавляем дополнительное логирование
                 console.log('Error:', error);
-
-                // Проверяем если это CORS ошибка
-                if (error.message && error.message.includes('Network Error')) {
-                    console.error('Possible CORS error:', error);
-                    alert('Login failed: Possible CORS error');
-                } else if (error.response) {
-                    console.log('Error response:', error.response);
-                    alert('Login failed: ' + (error.response.data.message || 'Invalid credentials'));
-                    this.error = error.response.data.message || 'Invalid credentials';
-                } else {
-                    console.log('Error message:', error.message);
-                    alert('Login failed: Request setup error');
-                    this.error = 'Request setup error';
-                }
             }
         }
     }

@@ -25,14 +25,14 @@
             <div class="flex">
                 <div class="w-1/2" v-if="topPriceItem && topPriceItem.length">
                     <h1 class="font-bold text-2xl">Топ дорогих трат в текущем месяце</h1>
-                    <table class="w-full text-left rounded-lg overflow-hidden">
+                    <table class="w-full text-left rounded-lg overflow-hidden complex-bg-green">
                         <tr class="text-xs uppercase bg-orange-400">
                             <th class="px-2 py-1">№</th>
                             <th class="px-2 py-1">Наименование</th>
                             <th class="px-2 py-1">Цена</th>
                             <th class="px-2 py-1">Вес</th>
                         </tr>
-                        <tr class="transition duration-75 bg-green-200 border-b border-orange-400 hover:bg-orange-400 hover:text-white hover:shadow-lg"
+                        <tr class="transition duration-75 border-b border-orange-400 hover:bg-orange-400 hover:text-white hover:shadow-lg"
                             v-for="(item, index) in topPriceItem" :key="index+1"
                         >
                             <td class="px-2 py-1">{{ index + 1 }}</td>
