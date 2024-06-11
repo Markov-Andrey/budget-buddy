@@ -25,7 +25,7 @@
             />
         </div>
         <div v-else-if="activeTab === 'income'">
-            <p>Содержимое для вкладки "Доходы".</p>
+            <TableIncome/>
         </div>
     </div>
 </template>
@@ -33,18 +33,22 @@
 <script>
 import TableComponent from "@/components/table/TableComponent";
 import ReceiptInputComponent from "@/components/inputs/ReceiptInputComponent";
+import TableIncome from "@/components/table/TableIncome.vue";
 import axiosInstance from '@/axios-instance';
 
 export default {
     name: "ReceiptsPage",
     components: {
         ReceiptInputComponent,
-        TableComponent
+        TableIncome,
+        TableComponent,
     },
     data() {
         return {
             activeTab: 'loss',
             receipts: [],
+            income: [],
+            subcategories: [],
             tabs: [
                 { value: 'loss', label: 'Расходы' },
                 { value: 'income', label: 'Доходы' }
@@ -52,15 +56,7 @@ export default {
         };
     },
     async mounted() {
-        if (this.activeTab === 'loss') {
-            try {
-                const response = await axiosInstance.post('/receipts/show');
-                this.receipts = response.data;
-                console.log(this.receipts.data);
-            } catch (error) {
-                console.error('Error fetching receipts:', error);
-            }
-        }
+        await this.fetchReceipts();
     },
     watch: {
         activeTab(newTab) {
@@ -78,7 +74,7 @@ export default {
             } catch (error) {
                 console.error('Error fetching receipts:', error);
             }
-        }
+        },
     }
 }
 </script>
