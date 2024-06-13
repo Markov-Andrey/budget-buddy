@@ -123,7 +123,7 @@ export default {
         this.fetchIncome();
     }
 };
-</script>
+</script> serve
 
 <style scoped>
 /* Ваши стили */
