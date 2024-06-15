@@ -7,7 +7,6 @@
         <table class="w-full text-sm text-left">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr class="px-6 py-3">
-                    <th class="px-6 py-3">ID</th>
                     <th class="px-6 py-3">Amount</th>
                     <th class="px-6 py-3">User ID</th>
                     <th class="px-6 py-3">Subcategory</th>
@@ -16,7 +15,6 @@
             </thead>
             <tbody>
                 <tr v-for="item in incomes" :key="item.id" class="bg-white border-b">
-                    <td class="px-6 py-4">{{ item.id }}</td>
                     <td class="px-6 py-4">{{ item.amount }}</td>
                     <td class="px-6 py-4">{{ item.user_id }}</td>
                     <td class="px-6 py-4">{{ getSubcategoryName(item.subcategory_id) }}</td>
