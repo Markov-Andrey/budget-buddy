@@ -1,21 +1,7 @@
 <template>
     <div>
         <!-- Форма для добавления новой записи -->
-        <form @submit.prevent="addIncome">
-            <div class="mb-4">
-                <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                <input type="number" id="amount" v-model="newIncome.amount" required>
-            </div>
-            <div class="mb-4">
-                <label for="subcategory" class="block text-sm font-medium text-gray-700">Subcategory</label>
-                <select id="subcategory" v-model="newIncome.subcategory_id" required>
-                    <option v-for="subcategory in subcategories" :key="subcategory.id" :value="subcategory.id">
-                        {{ subcategory.name }}
-                    </option>
-                </select>
-            </div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add Income</button>
-        </form>
+        <FormsIncomeAdd :subcategories="subcategories"/>
 
         <!-- Таблица данных -->
         <table class="w-full text-sm text-left">
@@ -52,17 +38,15 @@
 
 <script>
 import axiosInstance from "@/axios-instance";
+import FormsIncomeAdd from "@/components/forms/FormsIncomeAdd.vue";
 
 export default {
     name: "TableIncome",
+    components: {FormsIncomeAdd},
     data() {
         return {
             income: [],
             subcategories: [],
-            newIncome: {
-                amount: null,
-                subcategory_id: null
-            },
             currentPage: 1,
             perPage: 10,
             totalPages: 1
@@ -110,9 +94,6 @@ export default {
                 this.currentPage++;
                 this.fetchIncome();
             }
-        },
-        async addIncome() {
-            // Код для добавления новой записи
         },
         getSubcategoryName(subcategory_id) {
             const subcategory = this.subcategories.find(sub => sub.id === subcategory_id);
