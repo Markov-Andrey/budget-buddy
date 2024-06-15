@@ -11,6 +11,7 @@
                     <th class="px-6 py-3">Amount</th>
                     <th class="px-6 py-3">User ID</th>
                     <th class="px-6 py-3">Subcategory</th>
+                    <th class="px-6 py-3">Created At</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                     <td class="px-6 py-4">{{ item.amount }}</td>
                     <td class="px-6 py-4">{{ item.user_id }}</td>
                     <td class="px-6 py-4">{{ getSubcategoryName(item.subcategory_id) }}</td>
+                    <td class="px-6 py-4">{{ formatRussianDate(item.created_at) }}</td>
                 </tr>
             </tbody>
         </table>
@@ -76,6 +78,7 @@ export default {
                     this.income = response.data.incomes;
                     this.subcategories = response.data.subcategories;
                     this.totalPages = response.data.incomes.last_page;
+                    console.log(response.data);
                 } else {
                     console.error('Invalid response format:', response);
                 }
@@ -98,13 +101,24 @@ export default {
         getSubcategoryName(subcategory_id) {
             const subcategory = this.subcategories.find(sub => sub.id === subcategory_id);
             return subcategory ? subcategory.name : '-';
+        },
+        formatRussianDate(dateString) {
+            const date = new Date(dateString);
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+
+            return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
         }
     },
     mounted() {
         this.fetchIncome();
     }
 };
-</script> serve
+</script>
 
 <style scoped>
 /* Ваши стили */
