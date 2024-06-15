@@ -24,7 +24,7 @@ const routes = [
             },
             {
                 path: '/discord',
-                name: 'Добавить чек',
+                name: 'Дискорд',
                 component: DiscordPage
             },
             {
@@ -44,6 +44,10 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
+});
+router.beforeEach((to, from, next) => {
+    document.title = to.name + ' - OwlBudget' || 'OwlBudget';
+    next();
 });
 
 export default router;

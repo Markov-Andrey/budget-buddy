@@ -88,7 +88,7 @@ export default {
             this.dropdownOpen = false;
         },
         selectOption(option) {
-            this.$emit("subcategory", option.id);
+            this.$emit("update:subcategory", option.id);
             this.selectedOption = option;
             this.closeDropdown();
         },
@@ -102,7 +102,7 @@ export default {
             if (!dropdown.contains(event.target) && !input.contains(event.target)) {
                 this.closeDropdown();
             }
-        }
+        },
     }
 };
 </script>

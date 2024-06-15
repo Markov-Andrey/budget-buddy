@@ -1,37 +1,33 @@
 <template>
     <div>
         <!-- Форма для добавления новой записи -->
-        <FormsIncomeAdd :subcategories="subcategories"/>
+        <FormsIncomeAdd :subcategories="subcategories" @income-added="IncomeAdded"/>
 
         <!-- Таблица данных -->
         <table class="w-full text-sm text-left">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr class="px-6 py-3">
-                    <th class="px-6 py-3">Amount</th>
-                    <th class="px-6 py-3">User ID</th>
-                    <th class="px-6 py-3">Subcategory</th>
-                    <th class="px-6 py-3">Created At</th>
-                </tr>
+            <tr class="px-6 py-3">
+                <th class="px-6 py-3">Amount</th>
+                <th class="px-6 py-3">User ID</th>
+                <th class="px-6 py-3">Subcategory</th>
+                <th class="px-6 py-3">Created At</th>
+            </tr>
             </thead>
             <tbody>
-                <tr v-for="item in incomes" :key="item.id" class="bg-white border-b">
-                    <td class="px-6 py-4">{{ item.amount }}</td>
-                    <td class="px-6 py-4">{{ item.user_id }}</td>
-                    <td class="px-6 py-4">{{ getSubcategoryName(item.subcategory_id) }}</td>
-                    <td class="px-6 py-4">{{ formatRussianDate(item.created_at) }}</td>
-                </tr>
+            <tr v-for="item in incomes" :key="item.id" class="bg-white border-b">
+                <td class="px-6 py-4">{{ item.amount }}</td>
+                <td class="px-6 py-4">{{ item.user_id }}</td>
+                <td class="px-6 py-4">{{ getSubcategoryName(item.subcategory_id) }}</td>
+                <td class="px-6 py-4">{{ formatRussianDate(item.created_at) }}</td>
+            </tr>
             </tbody>
         </table>
 
-        <!-- Пагинация -->
-        <div class="flex justify-between items-center mt-4">
-            <div>
-                <button @click="fetchPrevPage" :disabled="!hasPrevPage" class="px-4 py-2 bg-gray-200 rounded">Previous</button>
-                <button @click="fetchNextPage" :disabled="!hasNextPage" class="px-4 py-2 bg-gray-200 rounded">Next</button>
-            </div>
-            <div>
-                Page {{ currentPage }} of {{ totalPages }}
-            </div>
+        <!-- Кнопка для загрузки следующей страницы -->
+        <div class="flex justify-center mt-4" v-if="hasNextPage">
+            <button @click="fetchNextPage" class="px-4 py-2 bg-gray-200 rounded">
+                Load More
+            </button>
         </div>
     </div>
 </template>
@@ -42,7 +38,7 @@ import FormsIncomeAdd from "@/components/forms/FormsIncomeAdd.vue";
 
 export default {
     name: "TableIncome",
-    components: {FormsIncomeAdd},
+    components: { FormsIncomeAdd },
     data() {
         return {
             income: [],
@@ -54,16 +50,16 @@ export default {
     },
     computed: {
         incomes() {
-            return this.income.data || [];
-        },
-        hasPrevPage() {
-            return this.currentPage > 1;
+            return this.income;
         },
         hasNextPage() {
             return this.currentPage < this.totalPages;
         }
     },
     methods: {
+        IncomeAdded() {
+            this.fetchIncome();
+        },
         async fetchIncome() {
             try {
                 const response = await axiosInstance.get('/income/index', {
@@ -73,7 +69,7 @@ export default {
                     }
                 });
                 if (response && response.data && response.data.incomes) {
-                    this.income = response.data.incomes;
+                    this.income = [...this.income, ...response.data.incomes.data];
                     this.subcategories = response.data.subcategories;
                     this.totalPages = response.data.incomes.last_page;
                     console.log(response.data);
@@ -84,16 +80,10 @@ export default {
                 console.error('Error fetching income:', error);
             }
         },
-        async fetchPrevPage() {
-            if (this.hasPrevPage) {
-                this.currentPage--;
-                this.fetchIncome();
-            }
-        },
         async fetchNextPage() {
             if (this.hasNextPage) {
                 this.currentPage++;
-                this.fetchIncome();
+                await this.fetchIncome();
             }
         },
         getSubcategoryName(subcategory_id) {
