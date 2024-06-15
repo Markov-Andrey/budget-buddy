@@ -13,6 +13,7 @@
                placeholder="Введите сумму"
                required
                step="0.01"
+               min="0"
                @input="updateValue($event.target.value)"
                @focus="isInputFocused = true"
                @blur="isInputFocused = false"

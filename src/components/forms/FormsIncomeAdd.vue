@@ -1,9 +1,10 @@
 <template>
-    <form @submit.prevent="addIncome" class="flex gap-3">
+    <form @submit.prevent="addIncome" class="flex gap-3 justify-center p-3">
 
         <div>
             <InputMoney @amount="updAmount"/>
         </div>
+
         <div>
             <InputSelect :options="subcategories" @subcategory="updSubcategoryId"/>
         </div>
@@ -12,6 +13,7 @@
                 class="bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-300 transition duration-200 active:bg-green-300">
             Добавить
         </button>
+
     </form>
 </template>
 
