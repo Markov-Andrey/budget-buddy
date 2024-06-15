@@ -1,12 +1,21 @@
 <template>
-    <button
-            :disabled="loading"
-            class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium rounded-lg group group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
-            :class="{ 'cursor-wait': loading }"
-    >
-      <span class="flex items-center space-x-2 relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md">
-        {{ loading ? 'Loading' : buttonText }}
-      </span>
+    <button type="submit"
+            class="px-2 py-2 rounded-lg
+            flex justify-center
+            w-full h-full
+            text-white
+            transition duration-200
+            bg-orange-400
+            hover:bg-orange-300
+            active:bg-green-300 active:duration-0
+            ">
+        <svg v-if="icon === 'delete'" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        <svg v-else-if="icon === 'edit'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.414 2.586a2 2 0 010 2.828l-12 12a2 2 0 01-.878.516l-5 1a1 1 0 01-1.292-1.292l1-5a2 2 0 01.516-.878l12-12a2 2 0 012.828 0zm-2.828 0L4 13.172l-.586 2.586 2.586-.586L15.586 4a1 1 0 00-1.414-1.414L4 12.586 2.414 14 4 12.414l10.172-10.172a1 1 0 00-1.414-1.414z"/>
+        </svg>
+        {{ text }}
     </button>
 </template>
 
@@ -14,19 +23,17 @@
 export default {
     name: "ButtonComponent",
     props: {
-        buttonText: {
+        text: {
             type: String,
-            required: true,
             default: ''
         },
-        loading: {
-            type: Boolean,
-            default: false
-        }
-    }
+        icon: {
+            type: String,
+            default: ''
+        },
+    },
 }
 </script>
 
 <style scoped>
 </style>
-

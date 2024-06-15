@@ -6,7 +6,7 @@
                 type="text"
                 readonly
                 @click="toggleDropdown"
-                :value="selectedOption.name"
+                :value="getValueById(subcategory)"
                 class="block appearance-none w-full h-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg leading-tight focus:outline-none
                 focus:ring-orange-300 focus:border-orange-300
                 hover:border-green-300
@@ -50,8 +50,9 @@
 
 <script>
 export default {
-    name: "CustomSelect",
+    name: "InputSelect",
     props: {
+        subcategory: {},
         value: {
             type: String,
             default: ""
@@ -64,22 +65,16 @@ export default {
     data() {
         return {
             dropdownOpen: false,
-            selectedOption: { id: 0, name: "Выберите опцию" }
+            selectedOption: null,
         };
     },
     mounted() {
         this.selectedOption = this.findSelectedOption();
         document.addEventListener('click', this.handleClickOutside);
     },
-    beforeUnmount() {
-        document.removeEventListener('click', this.handleClickOutside);
-    },
     methods: {
         findSelectedOption() {
-            return this.options.find(option => option.id === parseInt(this.value)) || {
-                id: 0,
-                name: "Выберите опцию"
-            };
+            return this.options.find(option => option.id === this.value);
         },
         toggleDropdown() {
             this.dropdownOpen = !this.dropdownOpen;
@@ -93,15 +88,19 @@ export default {
             this.closeDropdown();
         },
         isSelected(option) {
-            return option.id === this.selectedOption.id;
+            return this.selectedOption && option.id === this.selectedOption.id;
         },
         handleClickOutside(event) {
             const dropdown = this.$refs.dropdown;
             const input = this.$refs.input;
 
-            if (!dropdown.contains(event.target) && !input.contains(event.target)) {
+            if (dropdown && !dropdown.contains(event.target) && !input.contains(event.target)) {
                 this.closeDropdown();
             }
+        },
+        getValueById(id) {
+            const foundOption = this.options.find(option => option.id === id);
+            return foundOption ? foundOption.name : "Выберите категорию";
         },
     }
 };

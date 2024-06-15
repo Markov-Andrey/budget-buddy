@@ -11,21 +11,34 @@
                 <th class="px-6 py-3">User ID</th>
                 <th class="px-6 py-3">Subcategory</th>
                 <th class="px-6 py-3">Created At</th>
+                <th class="px-6 py-3">-</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in incomes" :key="item.id" class="bg-white border-b">
+            <tr v-for="item in incomeData"
+                :key="item.id"
+                class="transition-all overflow-hidden duration-75 h-auto"
+                :class="{ 'bg-orange-300 collapsed h-0': deleteItems.includes(item.id) }
+            ">
                 <td class="px-6 py-4">{{ item.amount }}</td>
                 <td class="px-6 py-4">{{ item.user_id }}</td>
                 <td class="px-6 py-4">{{ getSubcategoryName(item.subcategory_id) }}</td>
                 <td class="px-6 py-4">{{ formatRussianDate(item.created_at) }}</td>
+                <td class="px-6 py-4 flex gap-1">
+                    <div :id="`edit-${item.id}`">
+                        <ButtonComponent icon="edit"/>
+                    </div>
+                    <div @mouseup="deleteItem(item.id)">
+                        <ButtonComponent icon="delete"/>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
 
         <!-- Кнопка для загрузки следующей страницы -->
         <div class="flex justify-center mt-4" v-if="hasNextPage">
-            <button @click="fetchNextPage" class="px-4 py-2 bg-gray-200 rounded">
+            <button @click="moreIncome" class="px-4 py-2 bg-gray-200 rounded">
                 Load More
             </button>
         </div>
@@ -35,56 +48,60 @@
 <script>
 import axiosInstance from "@/axios-instance";
 import FormsIncomeAdd from "@/components/forms/FormsIncomeAdd.vue";
+import ButtonComponent from "@/components/buttons/ButtonComponent.vue";
 
 export default {
     name: "TableIncome",
-    components: { FormsIncomeAdd },
+    components: {ButtonComponent, FormsIncomeAdd },
     data() {
         return {
-            income: [],
+            incomeData: [],
             subcategories: [],
-            currentPage: 1,
-            perPage: 10,
-            totalPages: 1
+            totalItems: null,
+            perPage: 5,
+            deleteItems: [],
         };
     },
     computed: {
-        incomes() {
-            return this.income;
-        },
         hasNextPage() {
-            return this.currentPage < this.totalPages;
+            return this.perPage < this.totalItems;
         }
     },
     methods: {
         IncomeAdded() {
-            this.fetchIncome();
+            this.getIncome();
         },
-        async fetchIncome() {
+        async deleteItem(item) {
             try {
-                const response = await axiosInstance.get('/income/index', {
-                    params: {
-                        page: this.currentPage,
-                        per_page: this.perPage
-                    }
-                });
-                if (response && response.data && response.data.incomes) {
-                    this.income = [...this.income, ...response.data.incomes.data];
-                    this.subcategories = response.data.subcategories;
-                    this.totalPages = response.data.incomes.last_page;
-                    console.log(response.data);
-                } else {
-                    console.error('Invalid response format:', response);
-                }
+                this.deleteItems.push(item);
+                await axiosInstance.delete(`income/delete/${item}`);
+                await this.getIncome();
+            } catch (error) {
+                console.error('Error getCategory:', error);
+            }
+        },
+        async getCategory() {
+            try {
+                const response = await axiosInstance.get('/category/get-income');
+                this.subcategories = response.data;
+            } catch (error) {
+                console.error('Error getCategory:', error);
+            }
+        },
+        async getIncome() {
+            try {
+                const response = await axiosInstance.get(`/income/show/${this.perPage}`);
+
+                this.incomeData = response.data.incomeData;
+                this.totalItems = response.data.totalItems;
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching income:', error);
             }
         },
-        async fetchNextPage() {
-            if (this.hasNextPage) {
-                this.currentPage++;
-                await this.fetchIncome();
-            }
+        async moreIncome() {
+            this.perPage += this.perPage;
+            await this.getIncome();
         },
         getSubcategoryName(subcategory_id) {
             const subcategory = this.subcategories.find(sub => sub.id === subcategory_id);
@@ -103,11 +120,24 @@ export default {
         }
     },
     mounted() {
-        this.fetchIncome();
+        this.getCategory();
+        this.getIncome();
     }
 };
 </script>
 
 <style scoped>
-/* Ваши стили */
+
+.collapsed {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out;
+    td {
+        overflow: hidden;
+        max-height: 0;
+        margin: 0;
+        padding: 0;
+        transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out;
+    }
+}
 </style>

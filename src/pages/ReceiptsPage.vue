@@ -14,7 +14,7 @@
                 </button>
             </template>
         </div>
-        <div v-if="activeTab === 'loss'">
+        <div v-show="activeTab === 'loss'">
             <ReceiptInputComponent/>
             <TableComponent
                     v-if="receipts && receipts.data && receipts.data.length"
@@ -24,7 +24,7 @@
                     is-delete
             />
         </div>
-        <div v-else-if="activeTab === 'income'">
+        <div v-show="activeTab === 'income'">
             <TableIncome/>
         </div>
     </div>
