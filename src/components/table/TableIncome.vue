@@ -29,7 +29,7 @@
                          @mouseup="openModal(item.id)">
                         <ButtonComponent icon="edit"/>
                     </div>
-                    <div @mouseup="deleteItem(item.id)">np
+                    <div @mouseup="deleteItem(item.id)">
                         <ButtonComponent icon="delete"/>
                     </div>
                 </td>
