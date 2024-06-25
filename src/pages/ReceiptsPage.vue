@@ -27,6 +27,9 @@
         <div v-show="activeTab === 'income'">
             <TableIncome/>
         </div>
+        <div v-show="activeTab === 'invest'">
+            Инвестиции
+        </div>
     </div>
 </template>
 
@@ -51,7 +54,8 @@ export default {
             subcategories: [],
             tabs: [
                 { value: 'loss', label: 'Расходы' },
-                { value: 'income', label: 'Доходы' }
+                { value: 'income', label: 'Доходы' },
+                { value: 'invest', label: 'Инвестиции' },
             ]
         };
     },
