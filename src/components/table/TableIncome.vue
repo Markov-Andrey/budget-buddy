@@ -120,16 +120,19 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <div class="p-4 md:p-5 space-y-4">
-                            <p class="text-base leading-relaxed text-gray-500">
-                                {{ selectedItemDelete.amount }}
-                            </p>
-                            <p class="text-base leading-relaxed text-gray-500">
-                                {{ getSubcategoryName(selectedItemDelete.subcategory_id) }}
-                            </p>
-                            <p class="text-base leading-relaxed text-gray-500">
-                                {{ formatRussianDate(selectedItemDelete.created_at) }}
-                            </p>
+                        <div class="p-4">
+                            <table>
+                                <tr>
+                                    <td class="text-base leading-relaxed p-1">Сумма</td>
+                                    <td class="text-base leading-relaxed p-1">Категория</td>
+                                    <td class="text-base leading-relaxed p-1">Дата</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-base leading-relaxed p-1">{{ selectedItemDelete.amount }}</td>
+                                    <td class="text-base leading-relaxed p-1">{{ getSubcategoryName(selectedItemDelete.subcategory_id) }}</td>
+                                    <td class="text-base leading-relaxed p-1">{{ formatRussianDate(selectedItemDelete.created_at) }}</td>
+                                </tr>
+                            </table>
                         </div>
                         <!-- Modal footer -->
                         <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
