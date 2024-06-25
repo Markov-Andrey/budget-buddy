@@ -27,11 +27,12 @@ import {
     Legend,
     ArcElement,
     CategoryScale,
+    Filler
 } from 'chart.js'
 import axiosInstance from "@/axios-instance";
 import {doughnutColors} from "@/constants/colors.js";
 
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, Filler)
 
 export default {
     name: 'DoughnutChart',

@@ -59,13 +59,14 @@ import {
     CategoryScale,
     LinearScale,
     PointElement,
+    Filler,
 } from 'chart.js';
 import axiosInstance from "@/axios-instance";
 import {initTooltips} from 'flowbite';
 import { nextTick } from 'vue';
 import ElementHint from "@/components/element/ElementHint.vue";
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, LineElement, CategoryScale, LinearScale, PointElement)
+ChartJS.register(Title, Tooltip, Legend, BarElement, LineElement, CategoryScale, LinearScale, PointElement, Filler)
 
 export default {
     name: 'MixedChart',
