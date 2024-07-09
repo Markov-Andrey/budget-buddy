@@ -15,13 +15,15 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="item in investmentData" :key="item.investment_type_id">
+              <tr v-for="item in investmentData" :key="item.investment_type_id"
+                  :class="{'negative-row': item.latest_percent < 0, 'positive-row': item.latest_percent >= 0}
+              ">
                   <td>
                       <span>{{ item.investment_type_name }}</span>
                       <span v-if="item.investment_type_code"> ({{ item.investment_type_code }})</span>
                   </td>
-                  <td>{{ item.total_value }}</td>
                   <td>{{ item.total_size }}</td>
+                  <td>{{ item.total_value }}</td>
                   <td>{{ item.average_cost_per_unit }}</td>
                   <td>{{ item.latest_price }}</td>
                   <td>{{ item.latest_price_date }}</td>
@@ -32,8 +34,14 @@
               </tr>
               <tr>
                   <td>Сумма</td>
+                  <td>-</td>
                   <td>{{ sumInvestmentData }}</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
                   <td>{{ sumInvestmentCurrentData }}</td>
+                  <td>-</td>
+                  <td>-</td>
               </tr>
               </tbody>
           </table>
@@ -78,6 +86,21 @@ export default {
 <style scoped>
   tr {
     border-bottom: 1px solid #b6d0cd;
+  }
+  .positive-row {
+      transition: background-color .2s;
+      background-color: #f1fff8;
+      &:hover {
+          background-color: #d7ffe7;
+      }
+  }
+
+  .negative-row {
+      transition: background-color .2s;
+      background-color: #fffdfa;
+      &:hover {
+          background-color: #fff4d8;
+      }
   }
   .negative {
       color: red;
