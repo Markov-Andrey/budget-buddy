@@ -6,6 +6,7 @@ import ReceiptsPage from "@/pages/ReceiptsPage";
 import DiscordPage from "@/pages/DiscordPage.vue";
 import PersonalInfoPage from "@/pages/PersonalInfoPage.vue";
 import RunningCostsPage from "@/pages/RunningCostsPage.vue";
+import InvestmentPage from "@/pages/InvestmentPage.vue";
 
 const routes = [
     {
@@ -29,13 +30,18 @@ const routes = [
             },
             {
                 path: '/running-costs',
-                name: 'Текучка',
+                name: 'Текущая информация',
                 component: RunningCostsPage
             },
             {
                 path: '/personal-info',
                 name: 'Личная информация',
                 component: PersonalInfoPage
+            },
+            {
+                path: '/investment',
+                name: 'Инвестиции',
+                component: InvestmentPage
             },
         ]
     }
