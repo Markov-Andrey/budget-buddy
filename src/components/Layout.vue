@@ -10,7 +10,7 @@
             <ButtonMenu route="/receipts" buttonText="Мои чеки" iconName="IconMenuReceipt"/>
             <ButtonMenu route="/running-costs" buttonText="Текущие расходы" iconName="IconMenuStatistics"/>
             <ButtonMenu route="/personal-info" buttonText="Личная статистика" iconName="IconMenuChart"/>
-            <ButtonMenu route="/investment" buttonText="Инвестиции" iconName="IconMenuChart"/>
+            <ButtonMenu route="/investment" buttonText="Инвестиции" iconName="IconMenuStatistics"/>
         </div>
     </aside>
 
