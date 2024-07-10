@@ -12,7 +12,7 @@
                 <th class="px-6 py-3">Created At</th>
                 <th class="px-6 py-3">
                     <div>Detail</div>
-                    <div>Sign - Size - Cost per Unit</div>
+                    <div>(Sign - Size - Cost per Unit)</div>
                 </th>
                 <th class="px-6 py-3">-</th>
             </tr>
