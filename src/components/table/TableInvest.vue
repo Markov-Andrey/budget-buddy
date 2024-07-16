@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Форма для добавления новой записи -->
-        <!-- <FormsIncomeAdd :subcategories="subcategories" @income-added="IncomeAdded"/> -->
+        <!-- <FormsIncomeAdd :crypto="crypto" @income-added="IncomeAdded"/> -->
 
         <!-- Таблица данных -->
         <table class="w-full text-sm text-left">
@@ -49,7 +49,7 @@
             <div v-if="selectedItemChange" aria-hidden="true" class="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
                 <div class="relative p-4 w-full max-w-2xl max-h-full">
                     <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div class="relative bg-white rounded-lg shadow max-h-full overflow-hidden">
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                             <h3 class="text-xl font-semibold text-gray-900">
@@ -64,7 +64,7 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <div class="p-4 md:p-5 space-y-4">
+                        <div class="modal-container p-4 md:p-5 space-y-4 overflow-y-auto" style="max-height: calc(100vh - 10rem);">
                             <div>
                                 <label for="amount" class="block text-base font-medium text-gray-700">Сумма</label>
                                 <input type="text"
@@ -84,16 +84,20 @@
                                 >
                             </div>
                             <hr>
-                            <div class="grid grid-cols-3">
+                            <div class="grid grid-cols-3 font-bold">
                                 <div>Инвестиция</div>
                                 <div>Размер</div>
                                 <div>Цена за 1 ед</div>
                             </div>
                             <div v-for="detail in selectedItemChange.investment_detail" :key="detail.id">
                                 <div class="grid grid-cols-3">
-                                    <div>{{ detail.investment_type.name }}</div>
-                                    <div>{{ trimTrailingZeros(detail.size) }}</div>
-                                    <div>{{ trimTrailingZeros(detail.cost_per_unit) }}</div>
+                                    <select v-model="detail.investment_type_id" class="block w-full p-2 border rounded">
+                                        <option v-for="item in crypto" :key="item.id" :value="item.id">
+                                            {{ item.name }}
+                                        </option>
+                                    </select>
+                                    <input v-model="detail.size" id="size-input" type="number" step="0.000000001" class="block w-full p-2 border rounded">
+                                    <input v-model="detail.cost_per_unit" id="cost-input" type="number" step="0.000000001" class="block w-full p-2 border rounded">
                                 </div>
                             </div>
                         </div>
@@ -183,7 +187,7 @@ export default {
     data() {
         return {
             investData: [],
-            subcategories: [],
+            crypto: [],
             totalItems: null,
             perPage: 5,
             deleteItems: [],
@@ -252,8 +256,8 @@ export default {
         },
         async getCategory() {
             try {
-                const response = await axiosInstance.get('/category/get-income');
-                this.subcategories = response.data;
+                const response = await axiosInstance.get('/investment/get-crypto');
+                this.crypto = response.data;
             } catch (error) {
                 console.error('Error getCategory:', error);
             }
@@ -274,7 +278,7 @@ export default {
             await this.getInvest();
         },
         getSubcategoryName(subcategory_id) {
-            const subcategory = this.subcategories.find(sub => sub.id === subcategory_id);
+            const subcategory = this.crypto.find(sub => sub.id === subcategory_id);
             return subcategory ? subcategory.name : '-';
         },
         formatRussianDate(dateString) {
@@ -307,4 +311,29 @@ export default {
         transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out;
     }
 }
+/* Общие стили для контейнера модального окна */
+.modal-container {
+    max-height: 80vh; /* Максимальная высота контейнера */
+    overflow-y: auto; /* Включаем вертикальную прокрутку при необходимости */
+}
+
+/* Стили скроллбара для браузеров на основе WebKit (Chrome, Safari) */
+.modal-container::-webkit-scrollbar {
+    width: 8px; /* Ширина скроллбара */
+    background-color: transparent; /* Прозрачный фон скроллбара */
+}
+
+.modal-container::-webkit-scrollbar-track {
+    background-color: #edf2f7; /* Цвет фона скроллбара */
+}
+
+.modal-container::-webkit-scrollbar-thumb {
+    background-color: #53d99d; /* Цвет скроллбара */
+    border-radius: 10px; /* Закругление углов скроллбара */
+}
+
+.modal-container::-webkit-scrollbar-thumb:hover {
+    background-color: #ffbb29; /* Цвет скроллбара при наведении */
+}
+
 </style>
