@@ -28,7 +28,7 @@
                   <td>{{ item.latest_price }}</td>
                   <td>{{ item.latest_price_date }}</td>
                   <td>{{ item.latest_amount }}</td>
-                  <td :class="{'negative': item.latest_percent < 0, 'positive': item.latest_percent >= 0}">
+                  <td :class="{'text-red-600': item.latest_percent < 0, 'text-green-600': item.latest_percent >= 0}">
                       {{ item.latest_percent < 0 ? item.latest_percent : '+' + item.latest_percent }}
                   </td>
               </tr>
@@ -101,12 +101,5 @@ export default {
       &:hover {
           background-color: #fff4d8;
       }
-  }
-  .negative {
-      color: red;
-  }
-
-  .positive {
-      color: green;
   }
 </style>
