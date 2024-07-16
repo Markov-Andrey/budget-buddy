@@ -28,7 +28,7 @@
             <TableIncome/>
         </div>
         <div v-show="activeTab === 'invest'">
-            Инвестиции
+            <TableInvest/>
         </div>
     </div>
 </template>
@@ -37,6 +37,7 @@
 import TableComponent from "@/components/table/TableComponent";
 import ReceiptInputComponent from "@/components/inputs/ReceiptInputComponent";
 import TableIncome from "@/components/table/TableIncome.vue";
+import TableInvest from "@/components/table/TableInvest.vue";
 import axiosInstance from '@/axios-instance';
 
 export default {
@@ -45,6 +46,7 @@ export default {
         ReceiptInputComponent,
         TableIncome,
         TableComponent,
+        TableInvest
     },
     data() {
         return {
