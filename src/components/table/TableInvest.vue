@@ -197,7 +197,6 @@ export default {
     },
     computed: {
         hasNextPage() {
-            console.log(this.perPage, this.totalItems)
             return this.perPage < this.totalItems;
         },
         formattedDate: {
@@ -231,28 +230,27 @@ export default {
             this.getInvest();
         },
         async update() {
+            console.log(this.selectedItemChange);
             try {
                 let id = this.selectedItemChange.id;
-                let updatedItem = {
-                    amount: this.selectedItemChange.amount,
-                    created_at: this.selectedItemChange.created_at,
-                    subcategory_id: this.selectedItemChange.subcategory_id
-                };
+                let updatedItem = this.selectedItemChange;
                 this.selectedItemChange = null;
-                await axiosInstance.put(`income/update/${id}`, updatedItem);
+                let res = await axiosInstance.post(`investment/update/${id}`, updatedItem);
+                await this.getInvest();
+                console.log(res);
             } catch (error) {
                 console.error('Error Update:', error);
             }
         },
-        async deleteItem(item) {
-            try {
-                this.selectedItemDelete = null;
-                this.deleteItems.push(item);
-                await axiosInstance.delete(`income/delete/${item}`);
-                await this.getInvest();
-            } catch (error) {
-                console.error('Error getCategory:', error);
-            }
+        async deleteItem(/*item*/) {
+            //try {
+            //    this.selectedItemDelete = null;
+            //    this.deleteItems.push(item);
+            //    await axiosInstance.delete(`income/delete/${item}`);
+            //    await this.getInvest();
+            //} catch (error) {
+            //    console.error('Error getCategory:', error);
+            //}
         },
         async getCategory() {
             try {
