@@ -28,7 +28,7 @@
                 <td class="px-6 py-4">{{ formatRussianDate(item.created_at) }}</td>
                 <td class="px-6 py-4">
                     <div v-for="detail in item.investment_detail" :key="detail.id">
-                        <div>{{ detail.investment_type_id }} - {{ trimTrailingZeros(detail.size) }} - {{ trimTrailingZeros(detail.cost_per_unit) }} $</div>
+                        <div>{{ detail.investment_type.name }} - {{ trimTrailingZeros(detail.size) }} - {{ trimTrailingZeros(detail.cost_per_unit) }} $</div>
                     </div>
                 </td>
                 <td class="px-6 py-4 flex gap-1">
@@ -71,16 +71,8 @@
                                        id="amount"
                                        name="amount"
                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                       v-model="selectedItemChange.amount"
+                                       v-model="selectedItemChange.total_amount"
                                 >
-                            </div>
-                            <div>
-                                <label for="subcategory" class="block text-base font-medium text-gray-700">Подкатегория</label>
-                                <select id="subcategory" v-model="selectedItemChange.subcategory_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                    <option v-for="subcategory in subcategories" :key="subcategory.id" :value="subcategory.id">
-                                        {{ subcategory.name }}
-                                    </option>
-                                </select>
                             </div>
                             <div>
                                 <label for="created_at" class="block text-base font-medium text-gray-700">Дата</label>
@@ -90,6 +82,19 @@
                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                        v-model="formattedDate"
                                 >
+                            </div>
+                            <hr>
+                            <div class="grid grid-cols-3">
+                                <div>Инвестиция</div>
+                                <div>Размер</div>
+                                <div>Цена за 1 ед</div>
+                            </div>
+                            <div v-for="detail in selectedItemChange.investment_detail" :key="detail.id">
+                                <div class="grid grid-cols-3">
+                                    <div>{{ detail.investment_type.name }}</div>
+                                    <div>{{ trimTrailingZeros(detail.size) }}</div>
+                                    <div>{{ trimTrailingZeros(detail.cost_per_unit) }}</div>
+                                </div>
                             </div>
                         </div>
                         <!-- Modal footer -->
@@ -188,6 +193,7 @@ export default {
     },
     computed: {
         hasNextPage() {
+            console.log(this.perPage, this.totalItems)
             return this.perPage < this.totalItems;
         },
         formattedDate: {
