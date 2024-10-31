@@ -21,8 +21,15 @@
                         <div class="px-6 py-4">
                             <!-- Modal toggle -->
                             <button :data-modal-target="`photo-modal-${item.id}`" :data-modal-toggle="`photo-modal-${item.id}`" type="button">
-                                <img v-if="item.image_path" :src="`${url}/${item.image_path}`" alt="Image thumbnail"
-                                     class="thumbnail w-16 h-16 object-cover rounded"/>
+                                <img
+                                    v-if="!isImageError && item.image_path"
+                                    :src="`${url}/${item.image_path}`"
+                                    alt="Image thumbnail"
+                                    class="thumbnail w-16 h-16 object-cover rounded"
+                                    @error="handleImageError"
+                                />
+
+                                <span v-else class="text-3xl font-bold text-red-600 flex items-center justify-center">⮾</span>
                             </button>
 
                             <!-- Main modal -->
@@ -66,13 +73,15 @@
                         </div>
                         <div class="px-6 py-4">
                             <router-link v-if="isShow" :to="`/show/${item.id}`"
-                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show
+                                         class="font-medium">Show
                             </router-link>
-                            <router-link v-if="isEdit" :to="`/edit/${item.id}`"
-                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                            </router-link>
-                            <button v-if="isDelete" @click="deleteItem(item.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                Delete
+                            <button v-if="isEdit" :to="`/edit/${item.id}`"
+                                         class="font-medium hover:scale-110"><!-- TODO тут не ясно, реализован ли функционал -->
+                                ✒️
+                            </button>
+                            <button v-if="isDelete" @click="deleteItem(item.id)"
+                                    class="font-medium hover:scale-110">
+                                ❌
                             </button>
                         </div>
                     </div>
@@ -117,6 +126,7 @@ export default {
     data() {
         return {
             url: process.env.VUE_APP_API_URL + 'storage/',
+            isImageError: false,
         };
     },
     props: {
@@ -142,6 +152,9 @@ export default {
         },
     },
     methods: {
+        handleImageError() {
+            this.isImageError = true;
+        },
         async deleteItem(itemId) {
             try {
                 const response = await axiosInstance.delete(`/receipts/delete/${itemId}`);
@@ -171,4 +184,24 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.thumbnail {
+    display: block;
+}
+
+.thumbnail:not([src])::before {
+    content: attr(alt); /* Используем текст из атрибута alt */
+    font-size: 24px;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem; /* ширина, соответствующая w-16 */
+    height: 4rem; /* высота, соответствующая h-16 */
+    background-color: #f0f0f0;
+    border-radius: 0.5rem; /* радиус для rounded */
+}
+
+.thumbnail:not([src]) {
+    display: none; /* Скрываем сам <img>, оставляя только псевдоэлемент с alt-текстом */
+}
 </style>

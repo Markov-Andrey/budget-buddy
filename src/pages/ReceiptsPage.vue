@@ -18,7 +18,7 @@
             <ReceiptInputComponent/>
             <TableComponent
                     v-if="receipts && receipts.data && receipts.data.length"
-                    :headers="['Чек', 'Обработка', 'Ошибка', 'Ануллирован', 'Сумма', 'Дата', '']"
+                    :headers="['Фото', 'Обработка', 'Ошибка', 'Ануллирован', 'Сумма', 'Дата', '']"
                     :data="receipts.data"
                     is-edit
                     is-delete
